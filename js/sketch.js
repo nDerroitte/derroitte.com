@@ -3,11 +3,20 @@ function windowResized()
     resizeCanvas(windowWidth, windowHeight);
 }
 
+function changeBGColor()
+{
+    bgcolor = color(24, 0, 46);
+}
+function resetBGColor()
+{
+    bgcolor = color(0,3,17);
+}
 
 function setup() {
     canvas  = createCanvas (windowWidth, windowHeight);
     canvas.position(0,0)
     canvas.style('z-index', '-1')
+    bgcolor = color(0,3,17);
 }
     
 
@@ -60,7 +69,7 @@ function draw()
 {
     // maximiser l'opacité des ligneq
     // faire des autres objects connections au lieu de tout recalculé
-    background(0,3,17);
+    background(bgcolor);
     if(arrayStar.length<1000)
     {
         newStar = new starObject(random(0,width),random(0,height));
