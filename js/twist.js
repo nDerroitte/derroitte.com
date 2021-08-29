@@ -40,7 +40,7 @@ function end(place)
 {
   demo = false;
   clearInterval(repeater)
-  document.getElementById(place).textContent = "Oh, hello there.";
+  document.getElementById(place).textContent = "pls send css help";
 }
 String.prototype.replaceAt=function(index, replacement)
 {
