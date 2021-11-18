@@ -6,15 +6,18 @@
     <script src="js/Librairies/p5.sound.js"></script>
 
     <script src="js/sketch.js"></script>
+    <script src="js/starP5.js"></script>
+    <script src="js/starConnectionP5.js"></script>
   </head>
 
-  <a href="lab/index.html" onmouseover="changeBGColor()", onmouseleave ="resetBGColor()" class="button">
+  <a href="lab/index.html" onmouseover="hoverButton()", onmouseleave ="unhoverButton()" class="button">
     <span></span>
     <span></span>
     <span></span>
     <span></span>
     The lab
   </a>
+  
   <!-- idée pour le mouse over : faire apparatire les mots genre a la machine a écrire.
   dans setup: t0. dans draw() si tnow >= t0+ xx alors écrire lettre. t0 = tnow (pour reset et éviter de plannifier sur la commète ) -->
 
