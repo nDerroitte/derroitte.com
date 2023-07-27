@@ -1,5 +1,5 @@
 // Timer and end value
-var TargetDate = "05/15/2030 01:0 PM";
+var TargetDate = "05/15/2024 01:0 PM";
 BackColor = false;
 ForeColor = false;
 var CountActive = true;
@@ -40,7 +40,7 @@ function end(place)
 {
   demo = false;
   clearInterval(repeater)
-  document.getElementById(place).textContent = "pls send css help";
+  document.getElementById(place).textContent = "derroitte.com";
 }
 String.prototype.replaceAt=function(index, replacement)
 {
