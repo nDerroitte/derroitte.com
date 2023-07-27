@@ -1,32 +1,33 @@
 <!DOCTYPE html>
+
 <html>
   <head>
-    <link rel="stylesheet" href="css/index.css" />
-    <script src="js/Librairies/p5.js"></script>
-    <script src="js/Librairies/p5.sound.js"></script>
-
-    <script src="js/sketch.js"></script>
-    <script src="js/starP5.js"></script>
-    <script src="js/starConnectionP5.js"></script>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="css/Style.css" />
+    <title>Secret place</title>
   </head>
 
-  <a href="lab/index.html" onmouseover="hoverButton()", onmouseleave ="unhoverButton()" class="button">
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    The lab
-  </a>
-  
-  <!-- idée pour le mouse over : faire apparatire les mots genre a la machine a écrire.
-  dans setup: t0. dans draw() si tnow >= t0+ xx alors écrire lettre. t0 = tnow (pour reset et éviter de plannifier sur la commète ) -->
+  <body>
+    <header>
+      <video playsinline autoplay muted loop id="bgvid">
+        <source src="images/a.mp4" type="video/mp4">
+      </video>
+      <div id="Cassie">
+        <div class="align">
+          <h1 id="CassieText" onmouseover="start('CassieText')" onmouseleave="end('CassieText')">derroitte.com</h1>
+          <hr noshade></hr>
+          <span><font size="3"><font face="Raleway"><font color="#FFFFFF">
+            <div align="center">
+              <center>
+                <script language="JavaScript" src="js/twist.js"></script>
+                <script language="JavaScript" src="js/timer_ext.js"></script>
+              </center>
+            </div>
+          </span> &nbsp;
+        </div>
+      </div>
+    </header>
 
-  <a href="lab/index.html" class="button">
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    Projects
-  </a>
+  </body>
 
 </html>
