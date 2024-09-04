@@ -1,9 +1,22 @@
+document.addEventListener("DOMContentLoaded", function() {
+  var item = document.getElementById("RandomText");
 
+  // Attach event listeners
+  item.addEventListener("mouseover", function() {
+      start('RandomText');
+  }, false);
+
+  item.addEventListener("mouseout", function() {
+      end('RandomText');
+  }, false);
+});
+
+// Global variable
 var demo = false;
-
 // Babel style
 var repeater
 var letterIndex = [0, 0, 0, 0]
+
 function permute (place)
 {
     line = document.getElementById(place).textContent
