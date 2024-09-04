@@ -21,4 +21,5 @@ https://owasp.org/www-project-top-ten/
 
 Mis en place place :
 * robots.txt
-* 
+* Content-Security-Policy in .htaccess -> donne un 403 si on l'accède par URL direct, a changer ? 
+* Header set X-Content-Type-Options "nosniff"x²

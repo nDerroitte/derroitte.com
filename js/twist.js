@@ -1,12 +1,4 @@
-// Timer and end value
-var TargetDate = "05/15/2024 01:0 PM";
-BackColor = false;
-ForeColor = false;
-var CountActive = true;
-CountStepper = -1;
-LeadingZero = true;
-DisplayFormat = "%%D%% &nbsp; %%H%% &nbsp; %%M%% &nbsp; %%S%% ";
-FinishMessage = "<br/><em>This is a placeholder website. More soon, maybe.</em>";
+
 var demo = false;
 
 // Babel style
@@ -15,7 +7,7 @@ var letterIndex = [0, 0, 0, 0]
 function permute (place)
 {
     line = document.getElementById(place).textContent
-    for ( i=0 ; i< letterIndex.length;i++)
+    for ( i=0 ; i< letterIndex.length; i++)
     {
         line = line.replaceAt(letterIndex[i], String.fromCharCode(Math.floor((Math.random()*25)+97)))
     }
@@ -31,7 +23,7 @@ function start(place)
   line = document.getElementById(place).textContent
   for (i=0;i<letterIndex.length;i++)
   {
-    id = Math.floor((Math.random() * line.length) + 1);
+    id = Math.floor((Math.random() * (line.length - 1)) + 1);
     letterIndex[i] = id;
   }
   repeater=setInterval(function(){permute(place)}, 50);
