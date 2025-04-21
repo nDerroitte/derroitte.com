@@ -1,5 +1,9 @@
 # derroitte.com
 
+## Flask
+
+Je pense que j'ai une app qui run parce que ça me 403 mais je suis pas sûr
+
 ## DNS
 IP > derroitte.com. Permet d'enregistrer le nom sur un DNS.
 
@@ -8,6 +12,8 @@ Quand t'as payé ton .com, il a été enregistré sur le serveur .com. Quand tu 
 ## SSL
 
 C'est le certificat qui permet de HTTPS son site. Moi j'ai payé un Positive SSL payant comme un pigeon mais tu peux en faire des gratuits genre Let's Encrypt
+
+Update 2025 ; on est passé en Let's encrypt : https://community.letsencrypt.org/t/certsage-acme-client-version-2-1-0-easy-webpage-interface-optimized-for-cpanel-no-commands-to-type-root-not-required-fully-automated-certificate-renewals/236149
 
 ## Hosting
 

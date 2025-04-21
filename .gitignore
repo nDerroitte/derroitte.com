@@ -3,4 +3,5 @@ modules/
 
 
 .DS_STORE
-.htaccess
+.env
+.venv
