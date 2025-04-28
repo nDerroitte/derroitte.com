@@ -17,7 +17,7 @@ Options -Indexes
 <FilesMatch "\.(html|htm)$">
     Header set Content-Type "text/html"
 </FilesMatch>
-
+ 
 <FilesMatch "\.(css)$">
     Header set Content-Type "text/css"
 </FilesMatch>
@@ -29,3 +29,14 @@ Options -Indexes
 <FilesMatch "\.(json)$">
     Header set Content-Type "application/json"
 </FilesMatch>
+
+<FilesMatch "^(\.env|\.git|\.gitignore|composer\.json|composer\.lock)$">
+    Require all denied
+</FilesMatch>
+
+RewriteEngine On
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+ErrorDocument 403 /403.html
+ErrorDocument 404 /404.html

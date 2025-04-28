@@ -1,0 +1,63 @@
+*
+{
+  font-family: 'quicksand',monospace,serif;
+}
+body,html /* Tout le body..*/
+{
+  background-color:#000000;
+  margin: 0;
+}
+
+hr
+{
+  width:36%;
+  border-color:#FFFFFF!important
+}
+.align
+{
+  text-align: center;
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  -ms-transform:translate(-50%,-50%)
+}
+#RandomText
+{
+  font-family: "Raleway", sans-serif;
+  font-size: 2.7em;
+  text-decoration: none;
+  color: #FFFFFF;
+}
+
+
+#bgvid   {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  max-width: 100%;
+}
+
+
+#End
+{
+  text-align: center;
+  color: #FFFFFF;
+}
+@font-face
+{
+    font-family: 'nautilus_pompiliusregular';
+    src: url('../Font/Nautilus/nautilus-webfont.woff2') format('woff2'),
+         url('../Font/Nautilus/nautilus-webfont.woff') format('woff'),
+         url('../Font/Nautilus/nautilis.otf') format('otf');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face
+{
+    font-family: 'quicksand';
+    src: url('../Font/quicksand/quicksand-regular-webfont.woff2') format('woff2'),
+         url('../Font/quicksand/quicksand-regular-webfont.woff') format('woff'),
+         url('../Font/quicksand/quicksand-regular.otf') format('otf');
+    font-weight: normal;
+    font-style: normal;
+
+}

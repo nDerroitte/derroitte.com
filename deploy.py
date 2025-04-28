@@ -9,8 +9,18 @@ load_dotenv()
 ftp_host = "ftp.derroitte.com"
 ftp_user = os.environ.get("FTP_USER")
 ftp_pass = os.environ.get("FTP_PASS")
-remote_dir = "public_html/"   
-local_dir = "./derroitte.com"    
+ignore_img = True
+
+# flask
+remote_dir = "flask_app/"
+local_dir = "./derroitte.com/flask_app"    
+
+# public 
+# remote_dir = "public_html/"   
+# local_dir = "./derroitte.com/public_html"    
+# 
+
+
 
 def upload_dir(ftp, local_root, remote_root):
     def safe_mkdirs_and_cd(path):
@@ -32,6 +42,9 @@ def upload_dir(ftp, local_root, remote_root):
 
     for root, dirs, files in os.walk(local_root):
         rel_path = os.path.relpath(root, local_root)
+        print(rel_path)
+        if ignore_img and "images/" in rel_path:
+            continue
         # Se repositionner sur le dossier de base
         ftp.cwd(base_remote_path)
 

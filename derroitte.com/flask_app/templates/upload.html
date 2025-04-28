@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Uploader des photos</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/Style.css') }}">
+</head>
+<body>
+    <h1>Bienvenue Cassie !</h1>
+
+    <form method="POST" enctype="multipart/form-data">
+        <input type="file" name="photo">
+        <button type="submit">Uploader</button>
+    </form>
+
+    <a href="{{ url_for('logout') }}">Se déconnecter</a>
+
+    <h2>Galerie :</h2>
+    {% for photo in photos %}
+        <img src="{{ url_for('static', filename='uploads/' + photo) }}" width="200px">
+    {% endfor %}
+</body>
+</html>

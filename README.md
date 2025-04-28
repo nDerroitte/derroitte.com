@@ -29,3 +29,8 @@ Mis en place place :
 * robots.txt
 * Content-Security-Policy in .htaccess -> donne un 403 si on l'accède par URL direct, a changer ? 
 * Header set X-Content-Type-Options "nosniff"x²
+
+## Flask
+
+Y'a une python app qui tourne sur le serveur qui lance app.py
+Tout ce qui est dans le folder flaks_app est pas servit donc pas de prob de sécurité avec le .env
