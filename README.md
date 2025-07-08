@@ -34,3 +34,7 @@ Mis en place place :
 
 Y'a une python app qui tourne sur le serveur qui lance app.py
 Tout ce qui est dans le folder flaks_app est pas servit donc pas de prob de sécurité avec le .env
+
+### Bugs
+
+- App qui est bloqué a "It works", c'est parce qu'ils overwrittent app.py avec un bete python, suffit de redeploy

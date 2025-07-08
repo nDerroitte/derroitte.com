@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Perrine & Jean-Simon</title>
+    <script src="{{ url_for('static', filename='js/collection.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/mariage.css') }}">
+</head>
+<body data-authenticated="{{ 'true' if authenticated else 'false' }}">
+
+    <!-- Gallerie apparait tjs-->
+   <div class="top-bar">
+        <h1 class="top-title">Perrine & Jean-Simon</h1>
+        <form action="{{ url_for('upload') }}" method="post" enctype="multipart/form-data" class="upload-form">
+            <label for="file-upload" class="upload-btn">Ajouter une image</label>
+            <input id="file-upload" type="file" name="file" multiple>
+        </form>
+    </div>
+
+    <!-- Galerie toujours visible -->
+    <div class="gallery">
+        {% for filename in images %}
+            <img src="{{ url_for('uploads', filename=filename) }}" alt="Image" class="gallery-image">
+        {% endfor %}
+    </div>
+
+    <div id="myModal" class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+</body>
+</html>

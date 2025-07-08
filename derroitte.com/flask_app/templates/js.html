@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Jean-Photo</title>
+    <script src="{{ url_for('static', filename='js/collection.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/js.css') }}">
+</head>
+<body data-authenticated="{{ 'true' if authenticated else 'false' }}">
+
+    <!-- Gallerie apparait tjs-->
+   <div class="top-bar">
+        <h1 class="top-title">Jean-Photo</h1>
+        <div class="tabs">
+            <a href="{{ url_for('index', tab='main') }}" class="{% if current_tab == 'main' %}active-tab{% endif %}">Pré-EVG</a>
+            <a href="{{ url_for('index', tab='evg') }}" class="{% if current_tab == 'evg' %}active-tab{% endif %}">EVG</a>
+        </div>
+        <div class="top-actions">
+            {% if not authenticated %}
+                <form action="{{ url_for('index') }}" method="post" class="auth-form-inline">
+                    <input type="password" name="password" placeholder="Mot de passe" required>
+                    <input type="submit" value="Se connecter">
+                </form>
+            {% else %}
+                <div class="auth-success">Identifiée ✓</div>
+            {% endif %}
+
+            {% if authenticated %}
+                <form action="{{ url_for('upload') }}" method="post" enctype="multipart/form-data" class="upload-form">
+                    <input type="hidden" name="tab" value="{{ current_tab }}">
+                    <label for="file-upload" class="upload-btn">Ajouter une image</label>
+                    <input id="file-upload" type="file" name="file" multiple>
+                </form>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Galerie toujours visible -->
+    <div class="gallery">
+        {% for filename in images %}
+            <img src="{{ url_for('uploads', filename=current_tab ~ '/' ~ filename) }}" alt="Image" class="gallery-image">
+        {% endfor %}
+    </div>
+
+    <div id="myModal" class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+
+
+    <!-- FULL VEROUILLER -->
+    <!-- <div class="top-bar">
+        <h1 class="top-title">Jean-Photo</h1>
+        <div class="top-actions">
+            {% if not authenticated %}
+            <p class="auth-info">Veuillez vous identifier pour voir et uploader les  images</p>
+
+            {% else %}
+                <div class="auth-success">Identifiée ✓</div>
+            {% endif %}
+    
+            {% if authenticated %}
+                <form action="{{ url_for('upload') }}" method="post" enctype="multipart/form-data" class="upload-form">
+                    <label for="file-upload" class="upload-btn">Ajouter une image</label>
+                    <input id="file-upload" type="file" name="file">
+                </form>
+            {% endif %}
+        </div>
+    </div>
+    
+
+    {% if authenticated %}
+        <div class="gallery">
+            {% for filename in images %}
+                <img src="{{ url_for('uploads', filename=filename) }}" alt="Image" class="gallery-image">
+            {% endfor %}
+        </div>
+        
+        <div id="myModal" class="modal">
+            <span class="close">&times;</span>
+            <img class="modal-content" id="modalImage">
+        </div>
+        {% else %}
+        <div class="auth-wrapper">
+            <form action="{{ url_for('index') }}" method="post" class="auth-form">
+                <input type="password" name="password" placeholder="Mot de passe" required>
+                <input type="submit" value="Se connecter">
+            </form>
+        </div>
+    {% endif %} -->
+
+</body>
+</html>

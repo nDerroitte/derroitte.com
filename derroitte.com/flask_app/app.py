@@ -1,53 +1,64 @@
-from flask import Flask, render_template, request, redirect, url_for, session, send_from_directory
+from flask import Flask, render_template, request, redirect, url_for, session, send_from_directory, abort
 import os
+from werkzeug.utils import secure_filename
 from dotenv import load_dotenv
 
 app = Flask(__name__)
 
 
-app.secret_key = os.getenv('SECRET_KEY') 
 
 load_dotenv()
+
+app.secret_key = os.getenv('SECRET_KEY') 
 PASSWORD = os.getenv("PASSWORD")
+BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+UPLOAD_FOLDER = os.path.join(BASE_DIR, 'uploads')
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
-@app.route('/upload', methods=['GET', 'POST'])
+def allowed_file(filename):
+    return '.' in filename and \
+        filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+@app.route('/uploads/<path:filename>')
+def uploads(filename):
+    return send_from_directory('uploads', filename)
+
+@app.route('/upload', methods=['POST'])
 def upload():
-    if not session.get('logged_in'):
-        if request.method == 'POST':
-            password = request.form.get('password')
-            if password == PASSWORD:
-                session['logged_in'] = True
-                return redirect(url_for('upload'))  # rediriger après connexion
-            else:
-                return render_template('login.html', error="Mot de passe incorrect.")
-        return render_template('login.html')
+    tab = request.form.get('tab', 'main') 
+    folder_path = os.path.join(app.config['UPLOAD_FOLDER'], tab)
 
-    # Ici, l'utilisateur est connecté
-    if request.method == 'POST':
-        if 'photo' not in request.files:
-            return "Pas de fichier envoyé", 400
-        
-        file = request.files['photo']
-        if file.filename == '':
-            return "Fichier vide", 400
+    os.makedirs(folder_path, exist_ok=True) 
 
-        upload_folder = 'uploads'
-        os.makedirs(upload_folder, exist_ok=True)
-        file.save(os.path.join(upload_folder, file.filename))
-        return redirect(url_for('upload'))
+    files = request.files.getlist('file')
+    for file in files:
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            filepath = os.path.join(folder_path, filename)
+            file.save(filepath)
 
-    photos = os.listdir('uploads') if os.path.exists('uploads') else []
-    return render_template('upload.html', photos=photos)
+    return redirect(url_for('index', tab=tab))
 
-# Déconnexion (optionnel)
-@app.route('/logout')
-def logout():
-    session.pop('logged_in', None)
-    return redirect(url_for('upload'))
 
-@app.route('/')
-def hello():
-    return render_template('up.html')
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    if request.method == 'POST' and 'password' in request.form:
+        if request.form['password'] == PASSWORD:
+            session['authenticated'] = True
+            return redirect(url_for('index'))
+
+    authenticated = session.get('authenticated', False)
+    tab = request.args.get('tab', 'main')
+
+    folder_path = os.path.join(app.config['UPLOAD_FOLDER'], tab)
+    if not os.path.exists(folder_path):
+        images = []
+    else:
+        images = os.listdir(folder_path)
+
+    return render_template('js.html', images=images, authenticated=authenticated, current_tab=tab)
+
 
 # Gestion d'erreur 404
 @app.errorhandler(404)
