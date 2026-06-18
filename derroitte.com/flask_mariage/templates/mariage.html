@@ -8,9 +8,12 @@
 </head>
 <body data-authenticated="{{ 'true' if authenticated else 'false' }}">
 
-    <!-- Gallerie apparait tjs-->
    <div class="top-bar">
-        <h1 class="top-title">Perrine & Jean-Simon</h1>
+        {% if session.authenticated %}
+            <h1 class="top-title">Perrine & Jean-Simon | admin</h1>
+        {% else %}
+            <h1 class="top-title">Perrine & Jean-Simon</h1>
+        {% endif %}
         <form action="{{ url_for('upload') }}" method="post" enctype="multipart/form-data" class="upload-form">
             <label for="file-upload" class="upload-btn">Ajouter une image</label>
             <input id="file-upload" type="file" name="file" multiple>
@@ -20,9 +23,17 @@
     <!-- Galerie toujours visible -->
     <div class="gallery">
         {% for filename in images %}
-            <img src="{{ url_for('uploads', filename=filename) }}" alt="Image" class="gallery-image">
+            <div class="gallery-item">
+                <img src="{{ url_for('uploads', filename=filename) }}" alt="Image" class="gallery-image">
+                    {% if session.authenticated %}
+                        <form method="POST" action="{{ url_for('delete_photo', filename=filename) }}" class="delete-form">
+                            <button type="submit" class="delete-button">🗑️</button>
+                        </form>
+                    {% endif %}
+            </div>
         {% endfor %}
     </div>
+
 
     <div id="myModal" class="modal">
         <span class="close">&times;</span>

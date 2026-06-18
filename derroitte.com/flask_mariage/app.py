@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session, send_from_directory, abort
+from flask import Flask, render_template, request, redirect, url_for, session, send_from_directory, abort, flash
 import os
 from werkzeug.utils import secure_filename
 from dotenv import load_dotenv
@@ -40,6 +40,25 @@ def upload():
     return redirect(url_for('index'))
 
 
+@app.route('/delete/<filename>', methods=['POST'])
+def delete_photo(filename):
+    if not session.get('authenticated', False):
+        abort(403)
+
+    import os
+    from werkzeug.utils import secure_filename
+
+    filename = secure_filename(filename)
+    path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+    if os.path.exists(path):
+        os.remove(path)
+        flash('Photo supprimée.')
+    else:
+        flash('Fichier introuvable.')
+
+    return redirect(url_for('index'))
+
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
     folder_path = app.config['UPLOAD_FOLDER']
@@ -49,6 +68,25 @@ def index():
         images = os.listdir(folder_path)
 
     return render_template('mariage.html', images=images)
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        if request.form['username'] == 'admin' and request.form['password'] == PASSWORD:
+            session['authenticated'] = True
+            flash('Connecté.')
+            return redirect(url_for('index'))  # ta page d'accueil
+        else:
+            flash('Échec de la connexion.')
+    return render_template('login.html')
+
+
+@app.route('/logout')
+def logout():
+    session['authenticated'] = False
+    flash('Déconnecté.')
+    return redirect(url_for('index'))
 
 
 # Gestion d'erreur 404

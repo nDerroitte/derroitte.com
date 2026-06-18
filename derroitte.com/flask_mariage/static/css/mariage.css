@@ -66,6 +66,34 @@ h1 {
     border-radius: 8px;
 }
 
+.gallery-item {
+    position: relative;
+}
+
+.delete-form {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    z-index: 10;
+}
+
+.delete-button {
+    background-color: rgba(255, 0, 0, 0.7);
+    border: none;
+    color: white;
+    font-size: 18px;
+    padding: 4px 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: none;
+    transition: opacity 0.2s;
+}
+
+.gallery-item:hover .delete-button {
+    display: block;
+}
+
+
 .close {
     position: absolute;
     top: 30px;
