@@ -1,32 +1,291 @@
 <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Natan Derroitte</title>
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="css/Style.css">
+  <script src="js/twist.js" defer></script>
+  <script src="js/main.js" defer></script>
+</head>
+<body>
+  <div class="wrap">
+    <h1 id="hero-name">Natan Derroitte</h1>
 
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <link rel="stylesheet" href="css/Style.css" />
-    <title>Secret place</title>
-  </head>
+    <div class="tabs">
+      <button class="tab active" data-tab="experiences">experiences</button>
+      <button class="tab" data-tab="skills">skills</button>
+      <button class="tab" data-tab="education">education</button>
+      <button class="tab" data-tab="links">links</button>
+    </div>
 
-  <body>
-    <header>
-      <video playsinline autoplay muted loop id="bgvid">
-        <source src="images/a.mp4" type="video/mp4">
-      </video>
-      <div id="Cassie">
-        <div class="align">
-          <h1 id="RandomText">derroitte.com</h1>
-          <script language="JavaScript" src="js/twist.js"></script>
-          <hr noshade></hr>
-          <span><font size="3"><font face="Raleway"><font color="#FFFFFF">
-            <div align="center">
-              <center>
-                <br/><em>This is a placeholder website. More soon, maybe.</em>
-              </center>
+    <!-- EXPERIENCES (timeline) -->
+    <div class="panel active" id="experiences">
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-date">2023 — 2025</div>
+          <div class="tl-title">Teacher — Data Engineer &amp; Data Visualisation <span class="tl-paren">(evening classes)</span></div>
+          <div class="tl-sub">Hénallux</div>
+        </div>
+        <div class="tl-item tl-link" id="orange-entry">
+          <div class="tl-date">2020 — now</div>
+          <div class="tl-title">Senior Data Engineer Consultant → Faction Lead</div>
+          <div class="tl-sub">Orange Business</div>
+          <div class="tl-jump">→ see mission details</div>
+        </div>
+        <!-- hidden until the Orange entry is clicked -->
+        <div class="tl-missions" id="orange-missions">
+          <div class="tl-missions-inner">
+            <div class="tlm-note">Consulting missions</div>
+            <div class="tlm-item">
+              <div class="tl-date">2025 — 2026</div>
+              <div class="tl-title">Tech Lead — Azure Databricks platform</div>
+              <div class="tl-sub">Elia</div>
+              <div class="tlm-note">Design and implementation of a scalable data platform on Azure Databricks for grid monitoring and weather forecasting.</div>
             </div>
-          </span> &nbsp;
+            <div class="tlm-item">
+              <div class="tl-date">2025</div>
+              <div class="tl-title">Data Engineer — Microsoft Fabric</div>
+              <div class="tl-sub">SNCT</div>
+              <div class="tlm-note">Implementation of a medallion architecture in Microsoft Fabric notebooks.</div>
+            </div>
+            <div class="tlm-item">
+              <div class="tl-date">2025</div>
+              <div class="tl-title">Senior Data Engineer - Data platform</div>
+              <div class="tl-sub">Paradigm</div>
+              <div class="tlm-note">Maintenance of a large, modern data platform monitoring Brussels mobility data.</div>
+            </div>
+            <div class="tlm-item">
+              <div class="tl-date">2025</div>
+              <div class="tl-title">Architect &amp; Data Engineer — AI literature watch</div>
+              <div class="tl-sub">Pierre Fabre</div>
+              <div class="tlm-note">Designed and deployed the infrastructure of a literature-watch platform powered by OpenAI models.</div>
+            </div>
+            <div class="tlm-item">
+              <div class="tl-date">2025</div>
+              <div class="tl-title">Architect - Azure Databricks</div>
+              <div class="tl-sub">Régie des bâtiments</div>
+              <div class="tlm-note">Supported the migration to Unity Catalog.</div>
+            </div>
+            <div class="tlm-item">
+              <div class="tl-date">2025</div>
+              <div class="tl-title">DevOps Engineer - Terraform Azure infrastructure</div>
+              <div class="tl-sub">Forces Motrices Valaisannes</div>
+              <div class="tlm-note">Deployed a secure, state-of-the-art infrastructure for an Azure Databricks data platform through IaC pipelines using Terraform.</div>
+            </div>
+            <div class="tlm-item">
+              <div class="tl-date">2024 — 2025</div>
+              <div class="tl-title">Tech Lead — Azure Databricks platform</div>
+              <div class="tl-sub">Tourism Wallonia</div>
+              <div class="tlm-note">Built a modern data platform for tourism sites in Wallonia.</div>
+            </div>
+            <div class="tlm-item">
+              <div class="tl-date">2023 — 2024</div>
+              <div class="tl-title">Data engineer - Azure Databricks migration</div>
+              <div class="tl-sub">UCB</div>
+              <div class="tlm-note">Lift-and-shift from an on-premise ETL to an Azure Databricks data platform for R&amp;D.</div>
+            </div>
+            <div class="tlm-item">
+              <div class="tl-date">2021 — 2023</div>
+              <div class="tl-title">Data Engineer - BI Team</div>
+              <div class="tl-sub">Worldline</div>
+              <div class="tlm-note">Implementation of ingestion flows for large volumes of transactional data using PySpark on Databricks.</div>
+            </div>
+            <div class="tlm-item">
+              <div class="tl-date">2020</div>
+              <div class="tl-title">Data scientist - NLP</div>
+              <div class="tl-sub">Servier</div>
+              <div class="tlm-note">Literature watch.</div>
+            </div>
+            <div class="tlm-item">
+              <div class="tl-date">2020</div>
+              <div class="tl-title">Data scientist - Computer Vision</div>
+              <div class="tl-sub">GSK</div>
+              <div class="tlm-note">Bacterial colony detection using CNN models.</div>
+            </div>
+          </div>
+        </div>
+        <div class="tl-item tl-link" id="thesis-entry">
+          <div class="tl-date">2019 — 2020</div>
+          <div class="tl-title">Master's thesis internship — Reinforcement Learning</div>
+          <div class="tl-sub">John Cockerill</div>
+          <div class="tl-jump">→ see thesis details</div>
+        </div>
+        <!-- hidden until the thesis entry is clicked -->
+        <div class="tl-missions" id="thesis-details">
+          <div class="tl-missions-inner">
+              <div class="tlm-note">Reinforcement learning is a branch of machine learning where an agent learns to make decisions by interacting with an environment and receiving rewards or penalties for its actions.</div>
+              <div class="tlm-note">Focus on reward shaping: optimisation of the reward function used to guide the agent's learning.</div>
+              <div class="tlm-note">Conducted for the company's R&amp;D department.</div>
+          </div>
+        </div>
+        <div class="tl-item tl-link" id="instructor-entry">
+          <div class="tl-date">2016 — 2020</div>
+          <div class="tl-title">Student instructor</div>
+          <div class="tl-sub">University of Liège</div>
+          <div class="tl-jump">→ see courses taught</div>
+        </div>
+        <!-- hidden until the Student instructor entry is clicked -->
+        <div class="tl-missions" id="instructor-details">
+          <div class="tl-missions-inner">
+            <div class="tlm-note">Exercise sessions &amp; labs:</div>
+            <div class="tlm-item">
+              <div class="tl-date">2018 — 2019</div>
+              <div class="tl-title">Introduction à l'informatique</div>
+              <div class="tl-sub">Exercise sessions in C.</div>
+            </div>
+            <div class="tlm-item">
+              <div class="tl-date">2017 — 2018</div>
+              <div class="tl-title">Organisation des Ordinateurs</div>
+              <div class="tl-sub">Exercise sessions on binary representation, computer structure and assembly language.</div>
+            </div>
+            <div class="tlm-item">
+              <div class="tl-date">2017 — 2018</div>
+              <div class="tl-title">Laboratoires de programmation mathématique et physique</div>
+              <div class="tl-sub">Helping students solve practical exercises in Python.</div>
+            </div>
+            <div class="tlm-item">
+              <div class="tl-date">2016 — 2018</div>
+              <div class="tl-title">Premier projet d'informatique</div>
+              <div class="tl-sub">Computer Science labs — helping students build a game in Python.</div>
+            </div>
+          </div>
         </div>
       </div>
-    </header>
+    </div>
 
-  </body>
+    <!-- SKILLS -->
+    <div class="panel" id="skills">
+      <div class="skill-group">
+        <div class="skill-cat">Programming languages</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Python</span>
+          <span class="skill-tag">Java</span>
+          <span class="skill-tag">Scala</span>
+          <span class="skill-tag">JavaScript</span>
+          <span class="skill-tag">C</span>
+          <span class="skill-tag">C++</span>
+          <span class="skill-tag">Dart</span>
+          <span class="skill-tag">MATLAB</span>
+          <span class="skill-tag">Scheme</span>
+          <span class="skill-tag">Julia</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-cat">Data engineering</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Azure</span>
+          <span class="skill-tag">Databricks</span>
+          <span class="skill-tag">Spark</span>
+          <span class="skill-tag">Delta Lake</span>
+          <span class="skill-tag">dbt</span>
+          <span class="skill-tag">Terraform</span>
+          <span class="skill-tag">Docker</span>
+          <span class="skill-tag">DevOps &amp; CI/CD</span>
+          <span class="skill-tag">Streaming</span>
+          <span class="skill-tag">HiveMQ</span>
+          <span class="skill-tag">MySQL</span>
+          <span class="skill-tag">PostgreSQL</span>
+          <span class="skill-tag">Oracle</span>
+          <span class="skill-tag">TimescaleDB</span>
+          <span class="skill-tag">MongoDB</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-cat">Software engineering</div>
+        <div class="skill-tags">
+          <span class="skill-tag">REST APIs</span>
+          <span class="skill-tag">Object-Oriented</span>
+          <span class="skill-tag">Project structure</span>
+          <span class="skill-tag">Flutter</span>
+          <span class="skill-tag">Flask</span>
+          <span class="skill-tag">Mobile apps</span>
+          <span class="skill-tag">Discord bots</span>
+          <span class="skill-tag">Processing</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-cat">Data science</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Pandas</span>
+          <span class="skill-tag">NumPy</span>
+          <span class="skill-tag">regex</span>
+          <span class="skill-tag">scikit-learn</span>
+          <span class="skill-tag">PyTorch</span>
+          <span class="skill-tag">TensorFlow</span>
+        </div>
+        <div class="skill-note">Machine / Deep Learning — academic background.</div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-cat">Data visualisation</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Power BI</span>
+          <span class="skill-tag">Looker Studio</span>
+          <span class="skill-tag">Grafana</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-cat">Typesetting</div>
+        <div class="skill-tags">
+          <span class="skill-tag">LaTeX</span>
+          <span class="skill-tag">Markdown</span>
+          <span class="skill-tag">HTML / CSS</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-cat">Tools &amp; misc</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Jira</span>
+          <span class="skill-tag">Confluence</span>
+          <span class="skill-tag">Git</span>
+          <span class="skill-tag">Agile</span>
+          <span class="skill-tag">Miro</span>
+          <span class="skill-tag">Lucid</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-cat">Spoken languages</div>
+        <div class="skill-tags">
+          <span class="skill-tag">French — native</span>
+          <span class="skill-tag">English — professional</span>
+          <span class="skill-tag">Dutch — basic</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- EDUCATION -->
+    <div class="panel" id="education">
+      <div class="xp">
+        <div class="xp-head">
+          <span class="xp-role">Master's — Civil Engineering in Computer Science</span>
+          <span class="xp-date">2015 — 2020</span>
+        </div>
+        <div class="xp-org">University of Liège</div>
+        <div class="xp-desc">Focus on Intelligent Systems &amp; Robotics.</div>
+      </div>
+      <div class="xp">
+        <div class="xp-head">
+          <span class="xp-role">Certifications</span>
+        </div>
+        <div class="xp-desc">
+          • Databricks Certified Data Engineer Associate <span class="cert-year">(2023)</span>
+          <br>• Databricks Certified Spark Developer <span class="cert-year">(2021)</span>
+          <br>• Microsoft Certified: Azure Data Engineer Associate <span class="cert-year">(2021)</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- LINKS -->
+    <div class="panel" id="links">
+      <nav>
+        <a href="https://github.com/nderroitte" target="_blank" rel="noopener">github</a>
+        <a href="https://www.linkedin.com/in/natanderroitte" target="_blank" rel="noopener">linkedin</a>
+        <a href="files/CV_DERROITTE_Natan.pdf" target="_blank" rel="noopener">cv</a>
+        <a href="#" id="contact-link">contact</a>
+      </nav>
+      <div class="contact-line" id="contact-reveal"></div>
+    </div>
+  </div>
+</body>
 </html>
