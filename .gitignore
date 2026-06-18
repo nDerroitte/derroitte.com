@@ -7,3 +7,6 @@ modules/
 .venv
 
 **/uploads/**
+
+__pycache__/
+*.py[cod]
