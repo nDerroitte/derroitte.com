@@ -35,6 +35,10 @@ Options -Indexes
 </FilesMatch>
 
 RewriteEngine On
+
+# Vanity redirect: /js/ -> /jeansimon/ (URL exacte uniquement, ne touche pas /js/main.js etc.)
+RewriteRule ^js/?$ https://derroitte.com/jeansimon/ [R=301,L]
+
 RewriteCond %{HTTPS} off
 RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 

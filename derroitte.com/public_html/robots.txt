@@ -1,2 +1,8 @@
 User-agent: *
-Disallow: /
+Allow: /
+Disallow: /mariage/
+Disallow: /jeansimon/
+Disallow: /js/$
+Disallow: /files/
+
+Sitemap: https://derroitte.com/sitemap.xml
