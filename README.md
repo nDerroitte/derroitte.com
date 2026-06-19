@@ -61,4 +61,9 @@ A faire :
 
 ### Notes infra (pour ref)
 * DNS gere par l'hebergeur (NS `dns1/dns2.namecheaphosting.com`), pas par Namecheap BasicDNS -> les enregistrements DNS se font dans cPanel > Zone Editor
-* Deploiement du site : `python deploy.py` (FTPS, envoie `derroitte.com/public_html` -> `public_html/`)
+* Deploiement du site : `python deploy.py` (FTPS, `derroitte.com/public_html` -> `public_html/`)
+  * `python deploy.py` : push incremental (n'envoie que les fichiers modifies, compare la taille)
+  * `python deploy.py --force` : re-envoie tout
+  * `python deploy.py --mirror` : push + supprime cote serveur ce qui n'existe plus en local (reliques). Protege SSL/apps via la liste `PROTECTED` dans deploy.py. Reserve a public_html (refus automatique ailleurs).
+  * `python deploy.py --mirror --dry-run` : montre ce qui serait supprime, sans rien modifier
+  * `python deploy.py --app` : deploie l'app Flask jeansimon (`derroitte.com/flask_app` -> `flask_app/`) et la redemarre (touch tmp/restart.txt). Push simple, ne supprime jamais les uploads/.env du serveur.
