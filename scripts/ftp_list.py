@@ -8,7 +8,7 @@ import os
 load_dotenv()
 
 ftp = FTP_TLS()
-ftp.connect("ftp.derroitte.com", 21)
+ftp.connect(os.environ.get("FTP_HOST"), 21)
 ftp.login(os.environ.get("FTP_USER"), os.environ.get("FTP_PASS"))
 ftp.prot_p()
 

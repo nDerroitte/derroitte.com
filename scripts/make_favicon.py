@@ -1,12 +1,15 @@
 #!/usr/bin/env python3
 """Generate favicon ('n' mark) + apple-touch-icon. Sober, white bg, monospace."""
+import os
 from PIL import Image, ImageDraw, ImageFont
 
 FONT = "/usr/share/fonts/truetype/dejavu/DejaVuSansMono-Bold.ttf"
 TEXT = "n"
 BG = (255, 255, 255)
 FG = (42, 42, 42)  # #2a2a2a
-OUT = "/home/nderroitte/repos/derroitte.com/derroitte.com/public_html"
+# Chemin relatif au repo (script dans scripts/), portable.
+_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+OUT = os.path.join(_ROOT, "derroitte.com", "public_html")
 
 
 def render(size, font_ratio=0.72):

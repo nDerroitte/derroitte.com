@@ -23,9 +23,11 @@ import sys
 load_dotenv()
 
 # === Configuration ===
-FTP_HOST = "ftp.derroitte.com"
+FTP_HOST = os.environ.get("FTP_HOST")
 FTP_USER = os.environ.get("FTP_USER")
 FTP_PASS = os.environ.get("FTP_PASS")
+if not (FTP_HOST and FTP_USER and FTP_PASS):
+    sys.exit("Identifiants FTP manquants dans .env (FTP_HOST, FTP_USER, FTP_PASS).")
 
 APP = "--app" in sys.argv
 if APP:
