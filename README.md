@@ -45,7 +45,7 @@ Objectif : ranker sur "derroitte" (requête de marque, faible concurrence).
 
 Fait :
 * `robots.txt` : `Disallow: /` -> `Allow: /` (le site etait totalement bloque pour Google)
-* `robots.txt` : exclusions des apps privees `/mariage/`, `/jeansimon/`, alias `/js/`, et `/files/` (CV non indexe)
+* `robots.txt` : exclusions des apps privees `/jeansimon/`, alias `/js/`, et `/files/` (CV non indexe)
 * `.htaccess` : redirect `/js/` -> `/jeansimon/` (URL exacte, les scripts /js/*.js restent servis)
 * `sitemap.xml` cree (page d'accueil uniquement) + reference dans `robots.txt`
 * Google Search Console : propriete "Domaine" derroitte.com validee (TXT DNS dans cPanel Zone Editor)

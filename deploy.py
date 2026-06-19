@@ -12,8 +12,8 @@ ftp_pass = os.environ.get("FTP_PASS")
 ignore_img = True
 
 # flask
-# remote_dir = "flask_mariage/"
-# local_dir = "./derroitte.com/flask_mariage"    
+# remote_dir = "flask_app/"
+# local_dir = "./derroitte.com/flask_app"
 
 # public 
 remote_dir = "public_html/"   

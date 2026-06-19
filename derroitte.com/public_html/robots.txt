@@ -1,6 +1,5 @@
 User-agent: *
 Allow: /
-Disallow: /mariage/
 Disallow: /jeansimon/
 Disallow: /js/$
 Disallow: /files/
