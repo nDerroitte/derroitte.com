@@ -36,6 +36,9 @@ Options -Indexes
 
 RewriteEngine On
 
+# Shared Google Drive folder (exact URL only).
+RewriteRule ^IG2KGECFCC/?$ https://drive.google.com/drive/folders/1mjQomTxqw95WaiBsFdPRO0Jq-p3E4HZT [R=302,L]
+
 # Vanity redirect: /js/ -> /jeansimon/ (URL exacte uniquement, ne touche pas /js/main.js etc.)
 RewriteRule ^js/?$ https://derroitte.com/jeansimon/ [R=301,L]
 
