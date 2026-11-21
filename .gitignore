@@ -10,3 +10,6 @@ modules/
 
 __pycache__/
 *.py[cod]
+
+# GR20 trip site: private (photos of participants), deployed but never committed
+derroitte.com/public_html/gr20/
