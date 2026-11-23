@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Natan Derroitte · career</title>
+  <style>
+    /* Same palette and typography as derroitte.com (css/Style.css). */
+    :root {
+      --paper: #fdfcfa;
+      --ink: #1f1f1f;
+      --ink-soft: #2e2e2e;
+      --text: #3a3a3a;
+      --muted: #5f5f5f;
+      --faint: #707070;
+      --tag: #c9c4ba;
+      --grid: #e2ded6;
+      --accent: #3c87cc;
+      --accent-ink: #1d65a3;
+      --accent-soft: #9fc6ea;
+      --orange: #d39a6a;   /* muted Orange Business tone */
+      --gx: clamp(24px, 7vw, 120px);
+      --labelW: 190px;
+      --ease: cubic-bezier(.65, 0, .25, 1);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body { height: 100%; }
+    body {
+      background: var(--paper);
+      font-family: "DejaVu Sans Mono", "Courier New", monospace;
+      color: var(--text);
+      overflow: hidden;
+    }
+
+    /* very light paper grain overlay (images/grain.svg, inlined) */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.06;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    #app { position: fixed; inset: 0; overflow-y: auto; overflow-x: hidden; }
+
+    /* ---------- header (name + tabs, as on the site) ---------- */
+    header { position: absolute; top: 52px; left: var(--gx); right: var(--gx); }
+    h1 {
+      font-style: italic;
+      font-weight: 500;
+      font-size: 32px;
+      letter-spacing: 1px;
+      color: var(--ink-soft);
+      margin-bottom: 16px;
+      width: fit-content;
+    }
+    h1 a { color: inherit; text-decoration: none; }
+    .tabs { display: flex; gap: 26px; flex-wrap: wrap; }
+    .tab {
+      background: none;
+      border: none;
+      font-family: inherit;
+      font-size: 18px;
+      color: #6a6a6a;
+      cursor: pointer;
+      padding: 0 0 4px 0;
+      border-bottom: 2px solid transparent;
+      transition: color 0.15s ease, border-color 0.15s ease;
+    }
+    .tab:hover { color: #000; }
+    .tab.active { color: var(--ink); border-color: var(--ink); }
+
+    /* ---------- stage: timeline + content below; it rises on slide 2 ---------- */
+    #stage {
+      position: absolute;
+      left: var(--gx);
+      right: var(--gx);
+      top: 175px;
+      padding-bottom: 110px;
+      transition: top 1s var(--ease);
+    }
+
+    .cap {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 4px;
+      min-height: 20px;
+    }
+    .cap-text { font-size: 14px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+    .cap-text b { font-weight: 400; color: var(--accent-ink); }
+    .cap-actions { display: flex; gap: 22px; transition: opacity .4s ease; }
+    body[data-slide="1"] .cap-actions { opacity: 0; pointer-events: none; }
+    .linkbtn {
+      background: none;
+      border: none;
+      font-family: inherit;
+      font-size: 14px;
+      color: var(--accent-ink);
+      cursor: pointer;
+      padding: 0;
+    }
+    .linkbtn:hover { text-decoration: underline; }
+    .chapters { display: flex; gap: 6px; align-items: baseline; flex-wrap: wrap; }
+    .chapters .lead { font-size: 14px; color: var(--muted); margin-right: 4px; }
+    .chap { min-width: 30px; }
+    .dezoom { margin-left: 12px; }
+    .dezoom.active { background: var(--ink); border-color: var(--ink); color: #fff; }
+
+    /* Orange Business: bracket over the role + missions lanes */
+    .org-head { display: flex; height: 30px; margin-bottom: 4px; transition: opacity .4s ease; }
+    .lane-label.org-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding-top: 0;
+      color: var(--ink);
+      font-weight: 700;
+      border-left: 3px solid var(--orange);
+      padding-left: 10px;
+    }
+    .org-label img { height: 18px; width: auto; border-radius: 3px; opacity: .8; }
+    .org-axis { position: relative; flex: 1; overflow: hidden; z-index: 1; }
+    .org-bracket {
+      position: absolute;
+      top: 15px;
+      height: 15px;
+      border: 2px solid var(--orange);
+      border-bottom: none;
+      border-radius: 6px 6px 0 0;
+    }
+    .org-bracket span {
+      position: absolute;
+      top: -10px;
+      left: 10px;
+      background: var(--paper);
+      padding: 0 8px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--ink);
+      white-space: nowrap;
+    }
+    .lane.in-org .lane-label { border-left: 3px solid var(--orange); padding-left: 10px; }
+    .org-frame {
+      position: absolute;
+      background: rgba(211, 154, 106, 0.06);
+      border-left: 1px dashed rgba(211, 154, 106, 0.55);
+      border-right: 1px dashed rgba(211, 154, 106, 0.55);
+    }
+    .via { color: var(--muted); font-size: 13px; }
+    .chap {
+      background: none;
+      border: 1px solid var(--tag);
+      border-radius: 5px;
+      font-family: inherit;
+      font-size: 13px;
+      color: var(--text);
+      padding: 2px 8px;
+      cursor: pointer;
+      transition: border-color .15s ease, color .15s ease, background-color .15s ease;
+    }
+    .chap:hover { border-color: var(--accent); color: var(--accent-ink); }
+    .chap.active { border-color: var(--accent); background: var(--accent-ink); color: #fff; }
+
+    /* ---------- timeline ---------- */
+    .tl { position: relative; padding-top: 24px; }
+
+    .lane {
+      display: grid;
+      grid-template-rows: 1fr;
+      margin-bottom: 12px;
+      transition: grid-template-rows .8s var(--ease), opacity .5s ease, margin .8s var(--ease);
+    }
+    .lane-in { display: flex; min-height: 0; overflow: hidden; }
+    body[data-noform="1"] .lane[data-lane="formation"] { grid-template-rows: 0fr; opacity: 0; margin-bottom: 0; }
+
+    .lane-label {
+      width: var(--labelW);
+      flex: none;
+      padding: 8px 16px 0 0;
+      font-size: 12px;
+      line-height: 1.4;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .track { position: relative; flex: 1; z-index: 1; overflow: hidden; }
+
+    .overlay {
+      position: absolute;
+      left: var(--labelW);
+      right: 0;
+      top: 0;
+      bottom: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .gridlines { position: absolute; inset: 0; }
+    .grid { position: absolute; top: 24px; bottom: 0; width: 1px; background: var(--grid); }
+    .grid-m { background: #ebe8e2; }
+
+    .band {
+      position: absolute;
+      top: 18px;
+      bottom: 0;
+      background: rgba(60, 135, 204, 0.11);
+      border-left: 1px dashed #6fa8dc;
+      border-right: 1px dashed #6fa8dc;
+      opacity: 0;
+      transition: opacity .4s ease;
+    }
+    .band.on { opacity: 1; }
+
+    .now { position: absolute; top: 4px; bottom: 0; width: 0; border-left: 1px dashed var(--accent); }
+    .now span {
+      position: absolute;
+      top: -2px;
+      right: 6px;
+      font-size: 12px;
+      color: var(--accent-ink);
+      white-space: nowrap;
+    }
+    .playhead {
+      position: absolute;
+      top: 4px;
+      bottom: 0;
+      width: 2px;
+      margin-left: -1px;
+      background: var(--accent);
+      opacity: 0;
+      transition: opacity .4s ease;
+    }
+    .playhead span { position: absolute; top: -2px; left: 8px; font-size: 12px; color: var(--accent-ink); }
+    body.intro .playhead { opacity: 1; }
+    body.intro .now { opacity: 0; }
+
+    .bar {
+      position: absolute;
+      border: 1px solid var(--tag);
+      border-radius: 5px;
+      background: #fff;
+      font-family: inherit;
+      font-size: 13px;
+      color: var(--text);
+      text-align: left;
+      padding: 0 8px;
+      cursor: pointer;
+      overflow: hidden;
+      white-space: nowrap;
+      transition: opacity .45s ease, border-color .15s ease, color .15s ease, background-color .25s ease, box-shadow .25s ease;
+    }
+    .bar .lbl { display: block; overflow: hidden; text-overflow: ellipsis; }
+    .bar .logo { display: none; }
+    .bar.tiny { padding: 0; }
+    .bar.tiny .lbl { visibility: hidden; }
+    /* title does not fit: show the company logo instead */
+    .bar.mode-logo { display: flex; align-items: center; justify-content: center; padding: 0 2px; }
+    .bar.mode-logo .lbl { display: none; }
+    .bar.mode-logo .logo { display: block; }
+    /* logo + title when both fit */
+    .bar.mode-both { display: flex; align-items: center; gap: 6px; }
+    .bar.mode-both .logo { display: block; flex: none; }
+    .bar.mode-both .lbl { min-width: 0; }
+    .bar img.logo { height: calc(100% - 8px); width: auto; max-width: 100%; object-fit: contain; border-radius: 3px; }
+    .bar .logo.mono { font-size: 10px; font-weight: 700; letter-spacing: .5px; line-height: 1; color: var(--ink); }
+    .bar:hover { border-color: #8f8a80; color: var(--ink); }
+    .bar:focus { outline: none; }
+    .bar:focus-visible { box-shadow: 0 0 0 2px var(--accent-soft); }
+
+    .bar-formation { border-style: dashed; border-color: #aaa398; background: rgba(255, 255, 255, .6); color: #4a4a4a; font-size: 12px; }
+
+    /* Orange Business roles: the fill deepens as seniority grows */
+    .lvl1 { background: #ece9e3; color: #3a3a3a; border-color: #d3cec5; }
+    .lvl2 { background: #dcd7cd; color: #262626; border-color: #c9c3b8; }
+    .lvl3 { background: #c2bbad; color: #1a1a1a; border-color: #b0a898; }
+    .lvl4 { background: var(--ink-soft); color: var(--paper); border-color: var(--ink-soft); }
+    .lvl4:hover { color: #fff; }
+
+    .bar.sel { border-color: var(--accent); color: var(--accent-ink); background: #eef5fb; box-shadow: 0 0 0 1px var(--accent); }
+    .bar.lvl4.sel { background: var(--accent-ink); border-color: var(--accent-ink); color: #fff; }
+    .bar.sec { border-style: dashed; border-color: var(--accent); color: var(--accent-ink); }
+    .bar.lvl4.sec { background: #6f8fa8; color: #fff; }
+
+    /* schools keep their own colour, even when selected */
+    .bar.c-uliege { border-style: solid; border-color: #86b179; background: #eef5ea; color: #2d5a24; }
+    .bar.c-uliege.sel { border-color: #4f8a3f; background: #e1efda; color: #24501c; box-shadow: 0 0 0 1px #4f8a3f; }
+    .bar.c-henallux { border-style: solid; border-color: #7e9bcb; background: #ecf1f9; color: #25467d; }
+    .bar.c-henallux.sel, .bar.c-henallux.sec { border-color: #3f66a8; background: #e0e9f6; color: #1f3f74; box-shadow: 0 0 0 1px #3f66a8; }
+    .card.c-uliege { border-left-color: #86b179; }
+    .card.c-henallux { border-left-color: #7e9bcb; }
+
+    body[data-slide="1"] .bar { pointer-events: none; }
+    body[data-dim="1"] .bar:not(.sel):not(.sec) { opacity: .4; }
+    .bar.hidden, body[data-dim="1"] .bar.hidden { opacity: 0; pointer-events: none; }
+
+    .axis-row { display: flex; height: 24px; }
+    .axis { position: relative; flex: 1; overflow: hidden; z-index: 1; }
+    .tick { position: absolute; top: 5px; font-size: 13px; color: var(--faint); white-space: nowrap; }
+    .tick-y { transform: translateX(-50%); }
+    .tick-y0 { padding-left: 5px; color: var(--text); }
+    .tick-m { padding-left: 5px; font-size: 12px; }
+
+    /* ---------- below the timeline: detail cards (slide 1) / key successes (slide 2) ---------- */
+    .below { margin-top: 34px; transition: margin-top 1s var(--ease); }
+    .stack { display: grid; }
+    .stack > .layer {
+      grid-area: 1 / 1;
+      transition: opacity .5s ease, transform .6s var(--ease), visibility 0s linear 0s;
+    }
+    .stack > .layer.off {
+      opacity: 0;
+      transform: translateY(14px);
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity .35s ease, transform .4s ease, visibility 0s linear .4s;
+    }
+
+    @keyframes fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+    .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 24px 48px; }
+    .card {
+      border-left: 2px dashed var(--accent-soft);
+      padding: 2px 0 2px 20px;
+      animation: fade .35s ease;
+    }
+    .tl-date { font-size: 14px; color: var(--faint); letter-spacing: 0.5px; }
+    .card-title { font-size: 18px; color: var(--ink); font-weight: 700; margin-top: 3px; }
+    .tl-sub { font-size: 15px; color: var(--muted); margin-top: 3px; display: flex; align-items: center; gap: 8px; }
+    .tl-sub { flex-wrap: wrap; }
+    .tl-sub img { height: 18px; width: auto; border-radius: 3px; }
+    .card-note { font-size: 16px; line-height: 1.6; color: #3f3f3f; margin-top: 8px; }
+    .cards.few { grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)); }
+    .cards.few .card { max-width: 720px; }
+    /* chapter 1: wider first column so "Master's · Civil Engineering in Computer Science" stays on one line */
+    .cards.ch1 { grid-template-columns: 1.5fr 1fr 1fr; gap: 24px 32px; }
+    .cards.ch1 .card-title { font-size: 16px; }
+    .cards.dense { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px 40px; }
+    .cards.dense .card-title { font-size: 15px; }
+    .cards.dense .card-note {
+      font-size: 14px;
+      line-height: 1.45;
+      margin-top: 4px;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .hint { font-size: 14px; color: var(--faint); animation: fade .35s ease; }
+    .cards .hint { grid-column: 1 / -1; }
+    .hint kbd { font-family: inherit; border: 1px solid var(--tag); border-radius: 4px; padding: 0 5px; color: var(--text); }
+
+    .ks-item > * { transition: opacity .5s ease, transform .6s var(--ease); }
+    .ks-item.off > * { opacity: 0; transform: translateY(10px); }
+    .ks-item.on > *:nth-child(1) { transition-delay: .35s; }
+    .ks-item.on > *:nth-child(2) { transition-delay: .45s; }
+    .ks-item.on > *:nth-child(3) { transition-delay: .55s; }
+    .ks-item.on > *:nth-child(4) { transition-delay: .65s; }
+    .ks-item.on > *:nth-child(5) { transition-delay: .75s; }
+
+    /* key successes reuse the chapter cards: header card + one card per point */
+    .ks-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .ks-cards .ks-head { grid-column: 1 / -1; }
+    /* highlights by colour, not weight: the bold card title stays the only heavy text */
+    .card-note strong { color: var(--accent-ink); font-weight: 400; }
+    .ks-take strong { color: var(--ink); font-weight: 400; }
+    .ks-item .ks-take { margin-top: 16px; }
+    .ks-kicker { font-size: 14px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+    .ks-kicker b { font-weight: 400; color: var(--accent-ink); }
+    .ks-title {
+      font-style: italic;
+      font-weight: 500;
+      font-size: 30px;
+      letter-spacing: .5px;
+      color: var(--ink-soft);
+      margin: 6px 0 14px;
+    }
+    .ks-title .tl-paren { font-style: normal; font-size: 16px; color: var(--faint); letter-spacing: 0; margin-left: 6px; }
+    .ks-flow { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 22px; }
+    .chip {
+      font-size: 14px;
+      color: var(--text);
+      border: 1px solid var(--tag);
+      border-radius: 5px;
+      padding: 4px 10px;
+      background: #fff;
+    }
+    .chip-accent { border-color: var(--accent); color: var(--accent-ink); background: #f3f8fc; }
+    .arr { color: #8a8a8a; }
+
+    .ks-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px 56px; max-width: 1120px; }
+    .ks-num { font-size: 14px; color: var(--accent-ink); letter-spacing: 1px; }
+    .ks-point h3 { font-size: 18px; color: var(--ink); font-weight: 700; margin: 4px 0 8px; }
+    .ks-point p { font-size: 16px; line-height: 1.6; color: #333; }
+    .ks-stats { display: flex; gap: 44px; margin-top: 20px; }
+    .stat-n { display: block; font-style: italic; font-size: 40px; color: var(--ink); line-height: 1.1; }
+    .stat-l { font-size: 13px; color: var(--muted); }
+    .ks-take {
+      margin-top: 22px;
+      border-left: 2px dashed var(--accent-soft);
+      padding: 4px 0 4px 18px;
+      font-size: 15px;
+      color: var(--accent-ink);
+      max-width: 1120px;
+    }
+
+    /* ---------- bottom bar ---------- */
+    .foot {
+      position: fixed;
+      left: var(--gx);
+      right: var(--gx);
+      bottom: 26px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      z-index: 10;
+      pointer-events: none;
+    }
+    .foot > * { pointer-events: auto; }
+    /* paper backdrop so content scrolling under the footer stays readable */
+    .foot::before {
+      content: "";
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 76px;
+      background: linear-gradient(to bottom, rgba(253, 252, 250, 0), var(--paper) 45%);
+      z-index: -1;
+      pointer-events: none;
+    }
+    .keys { font-size: 13px; color: #7a7a7a; }
+    .steps { display: flex; align-items: center; gap: 14px; font-size: 14px; color: var(--faint); }
+    .steps .arrow { font-size: 20px; color: #555; background: none; border: none; cursor: pointer; font-family: inherit; padding: 0 4px; }
+    .steps .arrow:hover { color: #000; }
+    .steps .arrow:disabled { opacity: .3; cursor: default; }
+    .dots { display: flex; align-items: center; gap: 8px; }
+    .dots .gap { width: 10px; }
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #fff;
+      border: 2px solid #8f8f8f;
+      cursor: pointer;
+      padding: 0;
+      transition: background-color .2s ease, border-color .2s ease;
+    }
+    .dot:hover { border-color: #333; }
+    .dot.active { background: var(--ink); border-color: var(--ink); }
+
+    /* no transitions until the first frame is painted */
+    body.booting *, body.booting *::before { transition: none !important; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; transition-delay: 0s !important; }
+    }
+
+    @media (max-width: 1000px) {
+      .cards.ch1 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .cards.dense { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 820px) {
+      .cards.dense { grid-template-columns: 1fr; }
+      :root { --labelW: 84px; }
+      h1 { font-size: 26px; }
+      .tab { font-size: 16px; }
+      .lane-label { font-size: 9px; letter-spacing: .5px; padding-right: 8px; }
+      #stage { top: 150px; }
+      .ks-grid { grid-template-columns: 1fr; }
+      .ks-title { font-size: 24px; }
+      .keys { display: none; }
+    }
+  </style>
+</head>
+<body class="booting" data-slide="0" data-step="0">
+  <div id="app">
+    <header>
+      <h1><a id="hero-name" href="https://derroitte.com/">Natan Derroitte</a></h1>
+      <div class="tabs">
+        <button class="tab active" data-go="0">career</button>
+        <button class="tab" data-go="5">key successes</button>
+      </div>
+    </header>
+
+    <main id="stage">
+      <div class="cap">
+        <div class="cap-text" id="cap-text">career · 2015 → now</div>
+        <div class="cap-actions">
+          <div class="chapters" id="chapters"><span class="lead">chapter</span></div>
+          <button class="linkbtn" id="replay-btn">↺ replay</button>
+        </div>
+      </div>
+
+      <div class="tl" id="tl">
+        <div class="overlay" id="overlay">
+          <div class="gridlines" id="gridlines"></div>
+          <div class="org-frame" id="org-frame"></div>
+          <div class="band" id="band"></div>
+          <div class="now" id="now"><span>today</span></div>
+          <div class="playhead" id="playhead"><span></span></div>
+        </div>
+        <!-- lanes are built from ITEMS by the script -->
+        <div class="axis-row" id="axis-row">
+          <div class="lane-label"></div>
+          <div class="axis" id="axis"></div>
+        </div>
+      </div>
+
+      <div class="below stack">
+        <!-- slide 1: details of the selected experience -->
+        <section class="layer" id="detail">
+          <div class="cards" id="cards"></div>
+        </section>
+
+        <!-- slide 2: key successes -->
+        <section class="layer off stack" id="ks">
+          <article class="layer ks-item off" data-ks="ucb">
+            <div class="cards ks-cards">
+              <div class="card ks-head">
+                <div class="tl-date">key success 01 · 2023 → 2024</div>
+                <div class="card-title">UCB migration · on-premise → cloud</div>
+                <div class="tl-sub"><img src="logos/ucb.png" alt="">UCB <span class="via">· Orange Business mission</span></div>
+              </div>
+              <div class="card">
+                <div class="tl-date">01</div>
+                <div class="card-title">A critical migration, delivered</div>
+                <p class="card-note">A defining experience in my career: moving from <strong>on-premise to the cloud</strong>, with <strong>critical stakes</strong>. And a migration that <strong>went well</strong>.</p>
+              </div>
+              <div class="card">
+                <div class="tl-date">02</div>
+                <div class="card-title">Challenge, then take the lead</div>
+                <p class="card-note">I <strong>challenged the architecture choices</strong> a lot. That gave me the <strong>confidence to take the lead</strong> on several aspects of the project.</p>
+              </div>
+            </div>
+            <div class="ks-take">→ right after: my <strong>first Tech Lead role</strong>, on Tourism Wallonia (2024).</div>
+          </article>
+
+          <article class="layer ks-item off" data-ks="elia">
+            <div class="cards ks-cards">
+              <div class="card ks-head">
+                <div class="tl-date">key success 02 · 2025 → now</div>
+                <div class="card-title">Elia · grid monitoring</div>
+                <div class="tl-sub"><img src="logos/elia.png" alt="">Elia <span class="via">· Orange Business mission, Tech Lead</span></div>
+              </div>
+              <div class="card">
+                <div class="tl-date">01</div>
+                <div class="card-title">A project that matters</div>
+                <p class="card-note">Monitoring the electrical grid, <strong>including decentralised energy sources</strong>, gives a <strong>much more accurate picture of the network</strong>, which in turn supports <strong>better electricity production</strong> and a <strong>greater use of renewable energy</strong>.</p>
+              </div>
+              <div class="card">
+                <div class="tl-date">02</div>
+                <div class="card-title">Iterate to rebuild trust</div>
+                <p class="card-note">I took over the project in a <strong>difficult political context</strong>: a first “data product”, after a previous team that had not delivered. I chose a <strong>very iterative approach</strong>: <strong>ship a first piece quickly</strong> to reassure stakeholders. Today I <strong>lead 2 data products</strong> and <strong>contribute to the architecture of 2 more</strong>.</p>
+              </div>
+            </div>
+            <div class="ks-take">→ in parallel since early 2026: <strong>Faction Lead DataOps</strong>, a team of 15.</div>
+          </article>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <footer class="foot">
+    <div class="keys">← →: previous / next chapter · 1 to 5: jump to a chapter · d: dezoom</div>
+    <nav class="steps" aria-label="navigation">
+      <button class="arrow" id="prev" aria-label="previous">‹</button>
+      <div class="dots" id="dots"></div>
+      <button class="arrow" id="next" aria-label="next">›</button>
+      <span id="counter">1 / 7</span>
+    </nav>
+  </footer>
+
+  <script>
+  (function () {
+    "use strict";
+
+    // ---------------------------------------------------------------------
+    // Data. start / end are APPROXIMATE decimal years: they only drive the
+    // drawing (2023.5 = mid-2023). The dates shown to the audience are the
+    // `date` strings, taken from derroitte.com. Adjust freely.
+    // ---------------------------------------------------------------------
+    const NOW = (function () {
+      const d = new Date(), y = d.getFullYear();
+      return y + (d - new Date(y, 0, 1)) / (new Date(y + 1, 0, 1) - new Date(y, 0, 1));
+    })();
+
+    const LANES = [
+      { id: "formation", label: "education &amp; teaching", rowH: 22 },
+      { id: "role", label: "my role", rowH: 30, org: true },
+      { id: "missions", label: "client missions", rowH: 28, org: true },
+    ];
+
+    const ITEMS = [
+      // formation & teaching
+      { id: "uliege", lane: "formation", start: 2015.70, end: 2020.50, short: "Master's · ULiège",
+        date: "2015 → 2020", title: "Master's · Civil Engineering in Computer Science", org: "University of Liège",
+        note: "Focus on Intelligent Systems & Robotics." },
+      { id: "instructor", lane: "formation", start: 2016.70, end: 2020.45, short: "Student instructor",
+        date: "2016 → 2020", title: "Student instructor", org: "University of Liège",
+        note: "Exercise sessions and labs: C, computer organisation, Python." },
+      { id: "thesis", lane: "formation", start: 2019.70, end: 2020.50, short: "Thesis · RL",
+        date: "2019 → 2020", title: "Thesis · Reinforcement Learning", org: "John Cockerill",
+        note: "Thesis internship in the R&D department, focused on reward shaping." },
+      { id: "henallux", lane: "formation", start: 2023.70, end: 2025.50, short: "Teacher · Hénallux",
+        date: "2023 → 2025", title: "Teacher · Data Engineering & Data Visualisation", org: "Hénallux (evening classes)",
+        note: "Evening classes, alongside consulting missions." },
+
+      // role at Orange Business (derived from the mission titles)
+      { id: "r-ds", lane: "role", start: 2020.67, end: 2021.10, cls: "lvl1", short: "Data Scientist",
+        date: "2020", title: "Data Scientist", org: "Orange Business",
+        note: "First missions: NLP and computer vision." },
+      { id: "r-de", lane: "role", start: 2021.10, end: 2024.45, cls: "lvl2", short: "Data Engineer",
+        date: "2021 → 2024", title: "Data Engineer", org: "Orange Business",
+        note: "Large-scale ingestion with PySpark on Databricks, then a cloud migration." },
+      { id: "r-tl", lane: "role", start: 2024.45, end: 2026.00, cls: "lvl3", short: "Tech Lead · Architect",
+        date: "2024 → 2025", title: "Tech Lead · Architect", org: "Orange Business",
+        note: "Technical leadership and architecture of Azure Databricks platforms." },
+      { id: "faction", lane: "role", start: 2026.00, end: "now", cls: "lvl4", short: "Faction Lead · DataOps",
+        date: "2026", title: "Faction Lead · DataOps", org: "Orange Business",
+        note: "Manage and mentor a 15-member DataOps engineering team, setting strategic priorities and providing technical leadership for enterprise-scale cloud and data projects." },
+
+      // consulting missions
+      { id: "gsk", lane: "missions", start: 2020.67, end: 2020.90, short: "GSK",
+        date: "2020", title: "Data Scientist · Computer Vision", org: "GSK",
+        note: "Bacterial colony detection using CNN models." },
+      { id: "servier", lane: "missions", start: 2020.90, end: 2021.10, short: "Servier",
+        date: "2020", title: "Data Scientist · NLP", org: "Servier",
+        note: "Scientific literature watch." },
+      { id: "worldline", lane: "missions", start: 2021.10, end: 2023.45, short: "Worldline",
+        date: "2021 → 2023", title: "Data Engineer · BI Team", org: "Worldline",
+        note: "Ingestion flows for large volumes of transactional data using PySpark on Databricks." },
+      { id: "ucb", lane: "missions", start: 2023.45, end: 2024.45, short: "UCB",
+        date: "2023 → 2024", title: "Data Engineer · migration Azure Databricks", org: "UCB",
+        note: "Lift-and-shift from an on-premise ETL to an Azure Databricks data platform for R&D." },
+      { id: "tw", lane: "missions", start: 2024.45, end: 2025.20, short: "Tourism Wallonia",
+        date: "2024 → 2025", title: "Tech Lead · Azure Databricks platform", org: "Tourism Wallonia",
+        note: "Built a modern data platform for tourism sites in Wallonia." },
+      { id: "fmv", lane: "missions", start: 2025.00, end: 2025.25, short: "FMV",
+        date: "2025", title: "DevOps Engineer · Terraform Azure infrastructure", org: "Forces Motrices Valaisannes",
+        note: "Deployed a secure, state-of-the-art infrastructure for an Azure Databricks data platform through IaC pipelines using Terraform." },
+      { id: "regie", lane: "missions", start: 2025.10, end: 2025.35, short: "Régie des bâtiments",
+        date: "2025", title: "Architect · Azure Databricks", org: "Régie des bâtiments",
+        note: "Supported the migration to Unity Catalog." },
+      { id: "pf", lane: "missions", start: 2025.20, end: 2025.50, short: "Pierre Fabre",
+        date: "2025", title: "Architect & Data Engineer · AI literature watch", org: "Pierre Fabre",
+        note: "Designed and deployed the infrastructure of a literature-watch platform powered by OpenAI models." },
+      { id: "paradigm", lane: "missions", start: 2025.35, end: 2025.60, short: "Paradigm",
+        date: "2025", title: "Senior Data Engineer · data platform", org: "Paradigm",
+        note: "Maintenance of a large, modern data platform monitoring Brussels mobility data." },
+      { id: "snct", lane: "missions", start: 2025.50, end: 2025.72, short: "SNCT",
+        date: "2025", title: "Data Engineer · Microsoft Fabric", org: "SNCT",
+        note: "Implementation of a medallion architecture in Microsoft Fabric notebooks." },
+      { id: "elia", lane: "missions", start: 2025.72, end: "now", short: "Elia · grid monitoring",
+        date: "2025 → now", title: "Tech Lead · Azure Databricks platform", org: "Elia",
+        note: "Design and implementation of a scalable data platform on Azure Databricks for grid monitoring and weather forecasting. Lead on 2 data products, contributing to the architecture of 2 more." },
+    ];
+
+    // Logo shown when a title does not fit in its bar (files in ./logos).
+    // `mono` = text badge for clients without a logo file.
+    const LOGOS = {
+      uliege: "uliege", instructor: "uliege", thesis: "johncockerill", henallux: "henallux",
+      gsk: "gsk", servier: "servier", worldline: "worldline", ucb: "ucb", tw: "tw", fmv: "fmv",
+      regie: "regie", pf: "pf", paradigm: "paradigm", snct: "snct", elia: "elia",
+    };
+    const MONO = {};
+    // Shorter fallbacks tried before the logo (roles have no logo).
+    const ALT = {
+      uliege: ["Master's"], instructor: ["Instructor"], thesis: ["Thesis"], henallux: ["Teacher"], regie: ["Régie"],
+      "r-ds": ["DS"], "r-de": ["DE"], "r-tl": ["Tech Lead", "TL"], faction: ["Faction Lead", "FL"],
+    };
+
+    const FULL = [2015.35, NOW + 0.35];
+
+    const ORANGE = [2020.67, NOW];   // start at Orange Business
+
+    // The five chapters of the path (numbered on screen, not named).
+    const CHAPTERS = [
+      { range: [2015.70, 2020.50], label: "2015 → 2020", sel: ["uliege", "instructor", "thesis"] },
+      { range: [2020.67, 2023.45], label: "2020 → 2023", sel: ["gsk", "servier", "worldline"], sec: ["r-ds", "r-de"] },
+      { range: [2023.45, 2024.45], label: "2023 → 2024", sel: ["ucb"], sec: ["r-de"] },
+      { range: [2024.45, 2025.72], label: "2024 → 2025", sel: ["tw", "fmv", "regie", "pf", "paradigm", "snct"], sec: ["r-tl"] },
+      { range: [2025.72, NOW], label: "2025 → now", sel: ["elia", "faction"] },
+    ];
+    const around = (r) => { const pad = Math.max(0.3, (r[1] - r[0]) * 0.22); return [r[0] - pad, r[1] + pad]; };
+
+    const STEPS = CHAPTERS.map((c, k) => ({
+        slide: 0, chapter: k + 1, domain: around(c.range), band: c.range, sel: c.sel, sec: c.sec,
+        cap: "career · <b>" + c.label + "</b> · " + (k === 0 ? "before Orange" : "at Orange Business"),
+      }))
+      .concat([
+        { slide: 1, domain: around(CHAPTERS[2].range), band: CHAPTERS[2].range, sel: ["ucb"], sec: ["tw"], ks: "ucb",
+          cap: "key successes · <b>01</b> · UCB · at Orange Business" },
+        { slide: 1, domain: around(CHAPTERS[4].range), band: CHAPTERS[4].range, sel: ["elia"], sec: ["faction"], ks: "elia",
+          cap: "key successes · <b>02</b> · Elia · at Orange Business" },
+      ]);
+
+    const MONTHS = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
+    const GAP = 5, PAD = 3;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    const $ = (s) => document.querySelector(s);
+    const byId = {};
+    ITEMS.forEach((i) => { if (i.end === "now") i.end = NOW; byId[i.id] = i; });
+
+    // label widths, measured once with the bar font
+    const measure = document.createElement("canvas").getContext("2d");
+    function textW(t, size) {
+      measure.font = size + 'px "DejaVu Sans Mono", "Courier New", monospace';
+      return measure.measureText(t).width;
+    }
+    // school colours: green for ULiège, blue for Hénallux
+    const SCHOOL = { uliege: "c-uliege", instructor: "c-uliege", thesis: "c-uliege", henallux: "c-henallux" };
+
+    // ---------- build lanes (greedy row packing for overlapping items) ----------
+    const tl = $("#tl"), axisRow = $("#axis-row"), overlay = $("#overlay");
+    LANES.forEach((l) => {
+      const its = ITEMS.filter((i) => i.lane === l.id).sort((a, b) => a.start - b.start);
+      const rowEnd = [];
+      its.forEach((i) => {
+        let r = rowEnd.findIndex((e) => e <= i.start + 1e-6);
+        if (r < 0) { r = rowEnd.length; rowEnd.push(0); }
+        rowEnd[r] = i.end;
+        i.row = r;
+      });
+      const rows = Math.max(1, rowEnd.length);
+
+      if (l.org && !$("#org-head")) {
+        const head = document.createElement("div");
+        head.className = "org-head";
+        head.id = "org-head";
+        head.innerHTML = '<div class="lane-label org-label"><img src="logos/orange.png" alt="">Orange Business</div>' +
+          '<div class="org-axis"><div class="org-bracket" id="org-bracket"><span>consultant at Orange Business · 2020 → now</span></div></div>';
+        tl.insertBefore(head, axisRow);
+      }
+      const lane = document.createElement("div");
+      lane.className = "lane" + (l.org ? " in-org" : "");
+      lane.dataset.lane = l.id;
+      lane.innerHTML = '<div class="lane-in"><div class="lane-label">' + l.label + '</div><div class="track"></div></div>';
+      const track = lane.querySelector(".track");
+      track.style.height = rows * (l.rowH + GAP) - GAP + 2 * PAD + "px";
+
+      its.forEach((i) => {
+        const b = document.createElement("button");
+        b.type = "button";
+        b.className = "bar bar-" + l.id + (i.cls ? " " + i.cls : "") + (SCHOOL[i.id] ? " " + SCHOOL[i.id] : "");
+        b.style.top = PAD + i.row * (l.rowH + GAP) + "px";
+        b.style.height = l.rowH + "px";
+        b.style.lineHeight = l.rowH - 2 + "px";
+        b.title = i.title + " · " + i.org + " (" + i.date + ")";
+        b.innerHTML = '<span class="lbl"></span>';
+        i.lblEl = b.firstChild;
+        const fs = l.id === "formation" ? 12 : 13;
+        i.labels = [i.short].concat(ALT[i.id] || []).map((t) => ({ t: t, w: textW(t, fs) + 20 }));
+        i.cur = null;
+        i.logoW = 0;
+        if (LOGOS[i.id]) {
+          const img = document.createElement("img");
+          img.className = "logo";
+          img.alt = i.org;
+          img.src = "logos/" + LOGOS[i.id] + ".png";
+          b.insertBefore(img, b.firstChild);   // logo first, then the title
+          i.logoW = Math.max(18, l.rowH - 8) + 4;
+          i.hasImg = true;
+          // wide logos (e.g. SNCT) need more room: use the real aspect ratio once loaded
+          img.addEventListener("load", () => {
+            i.logoW = Math.round((l.rowH - 8) * img.naturalWidth / img.naturalHeight) + 4;
+            render();
+          });
+        } else if (MONO[i.id]) {
+          const m = document.createElement("span");
+          m.className = "logo mono";
+          m.textContent = MONO[i.id];
+          b.appendChild(m);
+          i.logoW = textW(MONO[i.id], 10) + 8;
+        }
+        b.addEventListener("click", (e) => { if (e.detail) b.blur(); onBarClick(i.id); });
+        track.appendChild(b);
+        i.el = b;
+      });
+      tl.insertBefore(lane, axisRow);
+    });
+
+    // ---------- state ----------
+    let step = 0;
+    let domain = FULL.slice();
+    let play = Infinity;            // intro playhead (decimal year); Infinity = everything visible
+    let selected = [];
+    let dezoom = false;             // whole-path view while staying on the current chapter
+    let overview = false;           // whole path, before chapter 1 (the opening view)
+    let band = null;                // [start, end] currently drawn
+    const anims = {};
+
+    const ease = (k) => (k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2);
+
+    function tween(key, dur, fn, done) {
+      cancelAnimationFrame(anims[key]);
+      if (reduced) { fn(1, 1); render(); if (done) done(); return; }
+      const t0 = performance.now();
+      const frame = (t) => {
+        const k = reduced ? 1 : Math.min(1, (t - t0) / dur);
+        fn(ease(k), k);
+        render();
+        if (k < 1) anims[key] = requestAnimationFrame(frame);
+        else { delete anims[key]; if (done) done(); }
+      };
+      anims[key] = requestAnimationFrame(frame);
+    }
+
+    // ---------- drawing ----------
+    const gridEl = $("#gridlines"), axisEl = $("#axis"), bandEl = $("#band"),
+          nowEl = $("#now"), playEl = $("#playhead"),
+          orgBracket = $("#org-bracket"), orgHead = $("#org-head"), orgFrame = $("#org-frame");
+
+    function x(v) { return (v - domain[0]) / (domain[1] - domain[0]); }
+    function pct(v) { return (v * 100).toFixed(4) + "%"; }
+
+    function render() {
+      const W = overlay.clientWidth || 1;
+      const span = domain[1] - domain[0];
+
+      ITEMS.forEach((i) => {
+        const shown = play >= i.start;
+        const end = Math.max(i.start, Math.min(i.end, play));
+        const x0 = x(i.start), x1 = x(end);
+        i.el.style.left = pct(x0);
+        i.el.style.width = pct(x1 - x0);
+        i.el.classList.toggle("hidden", !shown);
+
+        // full title if it fits, then shorter variants, then the logo, else nothing
+        // only the on-screen part counts; the label sticks to the visible edge
+        const lo = Math.max(0, -x0 * W), ro = Math.max(0, (x1 - 1) * W);
+        const px = Math.max(0, (x1 - x0) * W - lo - ro);
+        // with a logo: logo + title when both fit, else the logo alone
+        const opts = i.hasImg ? i.labels.map((o) => ({ t: o.t, w: o.w + i.logoW + 2, both: true })) : i.labels;
+        const fit = opts.find((o) => o.w <= px);
+        const mode = fit ? (fit.both ? "both" : "label") : i.logoW && px >= i.logoW ? "logo" : "tiny";
+        const base = mode === "label" ? 8 : mode === "both" ? 6 : mode === "logo" ? 2 : 0;
+        i.el.style.paddingLeft = lo + base + "px";
+        i.el.style.paddingRight = ro + base + "px";
+        const txt = fit ? fit.t : "";
+        if (txt !== i.cur) { i.lblEl.textContent = txt; i.cur = txt; }
+        i.el.classList.toggle("mode-logo", mode === "logo");
+        i.el.classList.toggle("mode-both", mode === "both");
+        i.el.classList.toggle("tiny", mode === "tiny");
+      });
+
+      // ticks: years, then quarters / months when zoomed in
+      const mode = span < 2.2 ? 1 : span < 4.5 ? 3 : 0;
+      let g = "", a = "";
+      for (let y = Math.floor(domain[0]); y <= Math.ceil(domain[1]); y++) {
+        const gy = x(y);
+        if (gy > 0 && gy < 1) g += '<i class="grid" style="left:' + pct(gy) + '"></i>';
+        if (!mode) {
+          const c = x(y + 0.5);
+          if (c > 0.015 && c < 0.985) a += '<span class="tick tick-y" style="left:' + pct(c) + '">' + y + "</span>";
+          continue;
+        }
+        for (let m = 0; m < 12; m += mode) {
+          const p = x(y + m / 12);
+          if (p < 0 || p > 0.97) continue;
+          if (m) g += '<i class="grid grid-m" style="left:' + pct(p) + '"></i>';
+          a += '<span class="tick ' + (m ? "tick-m" : "tick-y0") + '" style="left:' + pct(p) + '">' + (m ? MONTHS[m] : y) + "</span>";
+        }
+      }
+      gridEl.innerHTML = g;
+      axisEl.innerHTML = a;
+
+      // Orange Business bracket (label sticks to the visible part) and frame
+      const o0 = x(ORANGE[0]), o1 = x(ORANGE[1]);
+      orgBracket.style.left = pct(o0);
+      orgBracket.style.width = pct(o1 - o0);
+      orgBracket.firstChild.style.left = Math.max(0, -o0 * W) + 10 + "px";
+      const top = orgHead.offsetTop + 15;
+      const missions = tl.querySelector('.lane[data-lane="missions"]');
+      orgFrame.style.left = pct(o0);
+      orgFrame.style.width = pct(o1 - o0);
+      orgFrame.style.top = top + "px";
+      orgFrame.style.height = missions.offsetTop + missions.offsetHeight - top + "px";
+
+      nowEl.style.left = pct(x(NOW));
+      if (play !== Infinity) {
+        playEl.style.left = pct(x(Math.min(play, NOW)));
+        playEl.firstChild.textContent = Math.floor(Math.min(play, NOW));
+      }
+      if (band) {
+        bandEl.style.left = pct(x(band[0]));
+        bandEl.style.width = pct(x(band[1]) - x(band[0]));
+      }
+    }
+
+    function setBand(range) {
+      if (!range) { bandEl.classList.remove("on"); return; }
+      if (!band || !bandEl.classList.contains("on")) {
+        band = range.slice();
+        bandEl.classList.add("on");
+        render();
+        return;
+      }
+      const from = band.slice();
+      tween("band", 800, (e) => { band = [from[0] + (range[0] - from[0]) * e, from[1] + (range[1] - from[1]) * e]; });
+    }
+
+    function rangeOf(ids) {
+      if (!ids.length) return null;
+      return [Math.min.apply(null, ids.map((id) => byId[id].start)),
+              Math.max.apply(null, ids.map((id) => byId[id].end))];
+    }
+
+    // ---------- selection & detail cards ----------
+    const cardsEl = $("#cards");
+
+    function card(i) {
+      const d = document.createElement("div");
+      d.className = "card" + (SCHOOL[i.id] ? " " + SCHOOL[i.id] : "");
+      d.innerHTML = '<div class="tl-date"></div><div class="card-title"></div><div class="tl-sub"></div><p class="card-note"></p>';
+      d.children[0].textContent = i.date;
+      d.children[1].textContent = i.title;
+      const logo = LOGOS[i.id] || (i.lane === "role" ? "orange" : null);
+      if (logo) {
+        const img = document.createElement("img");
+        img.src = "logos/" + logo + ".png";
+        img.alt = "";
+        d.children[2].appendChild(img);
+      }
+      d.children[2].appendChild(document.createTextNode(i.org));
+      if (i.lane === "missions") {
+        const via = document.createElement("span");
+        via.className = "via";
+        via.textContent = "· Orange Business mission";
+        d.children[2].appendChild(via);
+      }
+      d.children[3].textContent = i.note;
+      return d;
+    }
+
+    function select(ids, sec, bandRange) {
+      selected = ids.slice();
+      sec = sec || [];
+      ITEMS.forEach((i) => {
+        i.el.classList.toggle("sel", selected.includes(i.id));
+        i.el.classList.toggle("sec", sec.includes(i.id));
+      });
+      setBand(bandRange || rangeOf(selected));
+
+      cardsEl.innerHTML = "";
+      if (!selected.length) {
+        cardsEl.innerHTML = '<p class="hint">press <kbd>→</kbd> to start with chapter 1, or click an experience for its details</p>';
+      } else {
+        selected.forEach((id) => cardsEl.appendChild(card(byId[id])));
+      }
+      cardsEl.classList.toggle("dense", selected.length > 3);
+      cardsEl.classList.toggle("few", selected.length > 0 && selected.length <= 2);
+      cardsEl.classList.toggle("ch1", selected.join() === CHAPTERS[0].sel.join());
+    }
+
+    function onBarClick(id) {
+      if (STEPS[step].slide !== 0) return;
+      if (play !== Infinity) finishIntro();
+      select(selected.length === 1 && selected[0] === id ? [] : [id]);
+    }
+
+    // ---------- steps ----------
+    const capEl = $("#cap-text");
+    const chapEl = $("#chapters");
+    CHAPTERS.forEach((c, k) => {
+      const b = document.createElement("button");
+      b.className = "chap";
+      b.textContent = k + 1;
+      b.title = c.label;
+      b.addEventListener("click", () => go(k));
+      chapEl.appendChild(b);
+    });
+    const dezoomBtn = document.createElement("button");
+    dezoomBtn.className = "chap dezoom";
+    dezoomBtn.textContent = "dezoom";
+    dezoomBtn.addEventListener("click", () => setDezoom(!dezoom));
+    chapEl.appendChild(dezoomBtn);
+    const chapBtns = chapEl.querySelectorAll(".chap:not(.dezoom)");
+    const dotsEl = $("#dots");
+    STEPS.forEach((s, n) => {
+      if (n && s.slide !== STEPS[n - 1].slide) dotsEl.insertAdjacentHTML("beforeend", '<span class="gap"></span>');
+      const d = document.createElement("button");
+      d.className = "dot";
+      d.setAttribute("aria-label", "step " + (n + 1));
+      d.addEventListener("click", () => go(n));
+      dotsEl.appendChild(d);
+    });
+    const dots = dotsEl.querySelectorAll(".dot");
+
+    // dezoom = whole path from 2015, while staying on the current chapter
+    function applyView() {
+      const s = STEPS[step];
+      const wide = (dezoom || overview) && s.slide === 0;
+      document.body.dataset.dim = s.slide === 1 || !wide ? "1" : "0";
+      document.body.dataset.noform = s.slide === 1 || (s.chapter > 1 && !wide) ? "1" : "0";
+      dezoomBtn.classList.toggle("active", wide);
+      capEl.innerHTML = overview ? "career · <b>2015 → now</b> · overview" : wide ? "career · <b>2015 → now</b>" : s.cap;
+      const from = domain.slice(), to = wide ? FULL : s.domain;
+      tween("domain", 1200, (e) => {
+        domain = [from[0] + (to[0] - from[0]) * e, from[1] + (to[1] - from[1]) * e];
+      });
+    }
+
+    function setDezoom(v) {
+      if (play !== Infinity) finishIntro();
+      if (overview && !v) { go(0); return; }
+      dezoom = v;
+      applyView();
+    }
+
+    function go(n) {
+      n = Math.max(0, Math.min(STEPS.length - 1, n));
+      const s = STEPS[n];
+      if (play !== Infinity) finishIntro();
+      step = n;
+      dezoom = false;
+      overview = false;
+
+      document.body.dataset.slide = s.slide;
+      document.body.dataset.step = n;
+      document.querySelectorAll(".tab").forEach((t) =>
+        t.classList.toggle("active", STEPS[+t.dataset.go].slide === s.slide));
+      dots.forEach((d, k) => d.classList.toggle("active", k === n));
+      $("#counter").textContent = n + 1 + " / " + STEPS.length;
+      $("#prev").disabled = false;   // before chapter 1 comes the overview
+      $("#next").disabled = n === STEPS.length - 1;
+      chapBtns.forEach((b, k) => b.classList.toggle("active", s.chapter === k + 1));
+
+      $("#detail").classList.toggle("off", s.slide !== 0);
+      $("#ks").classList.toggle("off", s.slide !== 1);
+      document.querySelectorAll(".ks-item").forEach((k) => {
+        const on = k.dataset.ks === s.ks;
+        k.classList.toggle("on", on);
+        k.classList.toggle("off", !on);
+      });
+
+      select(s.sel, s.sec, s.band);
+      applyView();
+
+      try { history.replaceState(null, "", "#" + (n + 1)); } catch (e) { /* file:// in some browsers */ }
+    }
+
+    // Overview: the whole path, before chapter 1 (where the page opens).
+    function showOverview() {
+      go(0);
+      overview = true;
+      select([]);
+      dots.forEach((d) => d.classList.remove("active"));
+      chapBtns.forEach((b) => b.classList.remove("active"));
+      $("#counter").textContent = "overview";
+      $("#prev").disabled = true;
+      applyView();
+      try { history.replaceState(null, "", location.pathname + location.search); } catch (e) { /* ignore */ }
+    }
+
+    const next = () => (overview ? go(0) : go(step + 1));
+    const prev = () => { if (overview) return; if (step === 0) showOverview(); else go(step - 1); };
+
+    // ---------- intro: the path draws itself from 2015 to today ----------
+    function intro() {
+      showOverview();
+      if (reduced) return;
+      play = FULL[0];
+      document.body.classList.add("intro");
+      render();
+      const start = FULL[0], dur = 3200;
+      tween("play", dur, (e, k) => { play = start + (NOW - start) * k; }, finishIntro);
+    }
+
+    function finishIntro() {
+      cancelAnimationFrame(anims.play);
+      delete anims.play;
+      play = Infinity;
+      document.body.classList.remove("intro");
+      render();
+    }
+
+    // ---------- wiring ----------
+    $("#prev").addEventListener("click", prev);
+    $("#next").addEventListener("click", next);
+    $("#replay-btn").addEventListener("click", intro);
+    document.querySelectorAll(".tab").forEach((t) => t.addEventListener("click", () => go(+t.dataset.go)));
+
+    document.addEventListener("keydown", (e) => {
+      if (e.altKey || e.ctrlKey || e.metaKey) return;
+      const k = e.key;
+      if ((k === " " || k === "Enter") && e.target.closest("button")) return;
+      if (k === "ArrowRight" || k === "ArrowDown" || k === "PageDown" || k === " " || k === "Enter") {
+        e.preventDefault(); next();
+      } else if (k === "ArrowLeft" || k === "ArrowUp" || k === "PageUp" || k === "Backspace") {
+        e.preventDefault(); prev();
+      } else if (/^[1-5]$/.test(k)) {
+        go(+k - 1);
+      } else if ((k === "d" || k === "0" || k === "z") && STEPS[step].slide === 0) {
+        setDezoom(!dezoom);
+      } else if (k === "Home") {
+        showOverview();
+      } else if (k === "End") {
+        go(STEPS.length - 1);
+      } else if (k === "Escape" && STEPS[step].slide === 0) {
+        select([]);
+      }
+    });
+    window.addEventListener("resize", render);
+    // also when a scrollbar appears or disappears and changes the timeline width
+    if (window.ResizeObserver) new ResizeObserver(() => render()).observe(overlay);
+    // the Orange frame follows the lanes when one folds or unfolds
+    tl.addEventListener("transitionend", (e) => { if (e.target.classList.contains("lane")) render(); });
+
+    // start on the overview; #1..#7 in the URL jumps straight to a step
+    const fromHash = parseInt(location.hash.slice(1), 10);
+    if (fromHash >= 1 && fromHash <= STEPS.length) {
+      domain = STEPS[fromHash - 1].domain.slice();
+      go(fromHash - 1);
+    } else {
+      domain = FULL.slice();
+      if (/[?&]nointro/.test(location.search)) showOverview();
+      else intro();   // runs before the first paint, so the bars start hidden
+    }
+    render();
+    requestAnimationFrame(() => requestAnimationFrame(() => document.body.classList.remove("booting")));
+
+    // ---------- name scramble on hover (same effect as js/twist.js) ----------
+    const nameEl = $("#hero-name");
+    const original = nameEl.textContent;
+    let rep = null;
+    nameEl.addEventListener("mouseover", () => {
+      clearInterval(rep);
+      const pos = [];
+      for (let p = 1; p < original.length; p++) pos.push(p);
+      for (let i = pos.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [pos[i], pos[j]] = [pos[j], pos[i]]; }
+      const idx = pos.slice(0, 9);
+      rep = setInterval(() => {
+        const c = nameEl.textContent.split("");
+        idx.forEach((i) => { c[i] = String.fromCharCode(97 + Math.floor(Math.random() * 26)); });
+        nameEl.textContent = c.join("");
+      }, 50);
+    });
+    nameEl.addEventListener("mouseout", () => { clearInterval(rep); nameEl.textContent = original; });
+  })();
+  </script>
+</body>
+</html>
