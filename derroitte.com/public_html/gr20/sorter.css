@@ -1,0 +1,51 @@
+/* "Qui va où ?" sorting slide. Colors come from theme.css variables. */
+.sorter-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px}
+.sorter-head h2{font-size:clamp(34px,3.6vw,56px)}
+.sorter-hint{margin-top:12px;font-size:17px;line-height:1.5;color:var(--muted);max-width:620px}
+.sorter-hint span{display:block;font-size:13px;color:var(--aqua);margin-top:4px}
+.sorter-actions{display:flex;flex-direction:column;align-items:flex-end;gap:10px;flex-shrink:0}
+.sorter-actions .primary{margin-top:0}
+.sorter-actions [hidden]{display:none}
+
+.sorter-zones{display:grid;grid-template-columns:1.7fr 1fr 1fr 1fr;gap:14px;margin-top:22px}
+.zone{background:var(--surface);border:1px solid var(--card-border);border-radius:14px;padding:12px;min-height:clamp(240px,40vh,400px);display:flex;flex-direction:column;transition:background-color .3s,border-color .3s,transform .3s,box-shadow .3s}
+.zone h3{font-size:16px;display:flex;align-items:center;gap:10px;letter-spacing:-.2px}
+.zone h3 b{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--trek-bg);color:var(--bar-fg);font-size:13px;flex-shrink:0}
+.zone[data-zone="c"] h3 b{background:var(--villa-bg)}
+.zone.unknown h3 b{background:color-mix(in srgb,var(--text) 20%,transparent);color:var(--text)}
+.zone .drop{flex:1;display:flex;flex-wrap:wrap;align-content:flex-start;justify-content:center;gap:10px 12px;margin-top:10px;padding:4px;border-radius:10px}
+.zone.over{border-color:var(--gold);box-shadow:0 0 0 2px var(--gold),0 16px 36px -18px #000a;transform:translateY(-3px)}
+.zone.over{background:color-mix(in srgb,var(--gold) 12%,var(--surface))}
+html[data-theme="lin"] .zone{box-shadow:0 10px 30px -20px #1d3a2c55}
+
+.person{all:unset;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;gap:4px;width:96px;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none}
+.person .ring{display:block;width:84px;height:84px;border-radius:50%;padding:3px;background:conic-gradient(var(--gold),var(--aqua),var(--gold));box-shadow:0 6px 16px -6px #0009;transition:transform .25s cubic-bezier(.3,1.6,.5,1)}
+.person img{display:block;width:100%;height:100%;border-radius:50%;object-fit:cover;border:2px solid var(--bg)}
+.person .pname{font-size:13px;font-weight:700;color:var(--text);text-align:center}
+.person:hover .ring{transform:scale(1.08) rotate(-4deg)}
+.person:focus-visible .ring{outline:3px solid var(--gold);outline-offset:3px}
+.person.dragging{position:fixed;z-index:50;cursor:grabbing;pointer-events:none}
+.person.dragging .ring{transform:scale(1.18) rotate(6deg);box-shadow:0 18px 30px -10px #000b}
+.person.enter{animation:person-in .7s cubic-bezier(.3,1.5,.5,1) both}
+.person.dropped{animation:person-drop .4s cubic-bezier(.3,1.6,.5,1)}
+@keyframes person-in{0%{opacity:0;transform:translateY(-40px) scale(.3) rotate(-20deg)}70%{opacity:1}100%{transform:none}}
+@keyframes person-drop{0%{transform:scale(.7)}100%{transform:none}}
+
+@media(max-height:860px) and (min-width:851px){
+  .sorter-hint{font-size:15px}
+  .sorter-zones{margin-top:14px}
+  .zone{min-height:clamp(240px,44vh,360px)}
+  .person{width:80px}
+  .person .ring{width:68px;height:68px}
+}
+@media(max-width:850px){
+  .sorter-head{flex-direction:column;align-items:flex-start}
+  .sorter-actions{align-items:flex-start}
+  .sorter-zones{grid-template-columns:1fr 1fr;gap:10px}
+  .zone{min-height:170px;padding:10px}
+  .zone h3{font-size:14px}
+  .person{width:60px}
+  .person .ring{width:52px;height:52px}
+  .sorter{padding-bottom:110px}
+}
+@media(prefers-reduced-motion:reduce){.person.enter,.person.dropped{animation:none}}

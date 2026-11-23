@@ -11,5 +11,11 @@ modules/
 __pycache__/
 *.py[cod]
 
-# GR20 trip site: private (photos of participants), deployed but never committed
-derroitte.com/public_html/gr20/
+# GR20 trip site: committed, EXCEPT what is private (deployed only):
+#  - photos of the participants
+#  - password hash + access-cookie token (anyone with the token bypasses the password)
+#  - link to the shared participants sheet, and the QR code pointing to it
+derroitte.com/public_html/gr20/assets/people/
+derroitte.com/public_html/gr20/.secrets.php
+derroitte.com/public_html/gr20/config.js
+derroitte.com/public_html/gr20/assets/qr.png

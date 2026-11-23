@@ -1,0 +1,18 @@
+# GR20 trip deck: password-only access. Every request is answered by gate.php,
+# which checks the access cookie before serving any file. Never indexed, never cached.
+RewriteEngine On
+RewriteRule .* - [E=Cache-Control:no-cache]
+RewriteCond %{REQUEST_URI} !/gr20/gate\.php$
+RewriteRule ^ gate.php [L]
+
+<IfModule LiteSpeed>
+    CacheDisable public /
+    CacheDisable private /
+</IfModule>
+
+<IfModule mod_headers.c>
+    # The deck uses inline styles/scripts and a data: SVG grain texture.
+    Header set Content-Security-Policy "default-src 'self'; frame-ancestors 'self'; form-action 'self'; base-uri 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; object-src 'none';"
+    Header set X-Robots-Tag "noindex, nofollow"
+    Header always set Cache-Control "private, no-store"
+</IfModule>

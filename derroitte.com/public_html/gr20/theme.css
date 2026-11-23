@@ -1,0 +1,113 @@
+/* Color themes. Every color in the site goes through these variables.
+   Default: "Sapin clair". Light: html[data-theme="lin"] "Lin et lagon". */
+
+:root{
+  --bg:#1f4a38;
+  --surface:#2b5c47;
+  --surface-2:#24513e;
+  --surface-hover:#336a53;
+  --card-border:transparent;
+  --text:#fff4d6;
+  --muted:#d3e2d6;
+  --gold:#f6b525;
+  --gold-light:#ffd77a;
+  --aqua:#a9d4cc;
+  --primary-bg:#f6b525;
+  --primary-fg:#142a20;
+  --primary-hover:#fff4d6;
+  --trek-bg:#f6b525;
+  --villa-bg:#a9d4cc;
+  --bar-fg:#142a20;
+  --chrome:#1a4232;
+  --chrome-strong:#143428;
+  --glow-1:#2f6a51;
+  --glow-2:#275a45;
+  --ridge-back:#275741;
+  --ridge-front:#22503c;
+  --dialog-bg:#fff4d6;
+  --dialog-fg:#1d3a2c;
+  --dialog-muted:#5a7363;
+  --qr-bg:#fff4d6;
+  --qr-fg:#1d3a2c;
+  --grain:.08;
+  --map-filter:none;
+  /* legacy names still referenced by unused rules */
+  --forest:var(--bg);
+  --cream:var(--text);
+  color-scheme:dark;
+}
+
+html[data-theme="lin"]{
+  --bg:#f7efdc;
+  --surface:#ffffff;
+  --surface-2:#fffaf0;
+  --surface-hover:#ffffff;
+  --card-border:#1d3a2c1a;
+  --text:#1d3a2c;
+  --muted:#4f6657;
+  --gold:#c27c0e;
+  --gold-light:#e7a940;
+  --aqua:#2f7d72;
+  --primary-bg:#1d3a2c;
+  --primary-fg:#fff4d6;
+  --primary-hover:#2f7d72;
+  --trek-bg:#f2c766;
+  --villa-bg:#b5dcd4;
+  --bar-fg:#1d3a2c;
+  --chrome:#f7efdc;
+  --chrome-strong:#fffaf0;
+  --glow-1:#fff9ec;
+  --glow-2:#efe2c3;
+  --ridge-back:#ede2c8;
+  --ridge-front:#e6d8b8;
+  --dialog-bg:#ffffff;
+  --dialog-fg:#1d3a2c;
+  --dialog-muted:#4f6657;
+  --qr-bg:#ffffff;
+  --qr-fg:#1d3a2c;
+  --grain:.035;
+  --map-filter:saturate(1.5) brightness(.82) drop-shadow(0 6px 10px #1d3a2c22);
+  color-scheme:light;
+}
+
+/* Smooth theme switch, without touching transform/opacity animations. */
+body,header,footer,.options button,.question-grid article,.calendar-day,.qr-card,dialog,
+.tools button,footer button,.sleep-grid article,.route span,details,summary,.callout,
+.calendar-replay,#editor-bar button,#ed-tools,.progress,.progress .dot:before{
+  transition-property:background-color,color,border-color,box-shadow,transform,opacity;
+  transition-duration:.4s,.4s,.4s,.3s,.35s,.5s;
+}
+.ridge,.gr-end,.gr-hiker{transition:fill .4s}
+
+.grain{opacity:var(--grain)}
+.corsica-map image{filter:var(--map-filter);transition:filter .4s}
+
+/* Card borders (visible only in the light theme). */
+.options button:not(:hover):not(.selected),.question-grid article,.calendar-day,.sleep-grid article,.qr-card{border-color:var(--card-border)}
+.question-grid article,.qr-card{border-style:solid;border-width:1px}
+html[data-theme="lin"] .calendar-day{border-color:#1d3a2c1f}
+html[data-theme="lin"] .options button,
+html[data-theme="lin"] .question-grid article,
+html[data-theme="lin"] .qr-card{box-shadow:0 10px 30px -18px #1d3a2c55}
+
+/* Light theme tweaks. */
+html[data-theme="lin"] .progress i{box-shadow:0 0 8px #c27c0e66}
+html[data-theme="lin"] .primary{box-shadow:0 10px 30px -12px #1d3a2c66}
+html[data-theme="lin"] .icon .star{color:var(--gold)}
+html[data-theme="lin"] .gr-trace{filter:none}
+html[data-theme="lin"] .sun-art{box-shadow:0 20px 40px -20px #1d3a2c55}
+html[data-theme="lin"] dialog::backdrop{background:#1d3a2c99}
+html[data-theme="lin"] .route-walker{background:var(--gold);box-shadow:0 0 0 4px #c27c0e33}
+html[data-theme="lin"] .gr-hiker{fill:#fff}
+html[data-theme="lin"] .brand img,html[data-theme="lin"] .badge{filter:drop-shadow(0 10px 18px #1d3a2c33)}
+html[data-theme="lin"] .options button.selected{outline-color:var(--gold)}
+
+/* Theme toggle icon */
+#theme{font-size:17px;line-height:1;padding:10px 14px}
+#theme i{font-style:normal;padding:0}
+#theme .th-moon{display:none}
+html[data-theme="lin"] #theme .th-sun{display:none}
+html[data-theme="lin"] #theme .th-moon{display:inline}
+
+/* Narrow phones: icon-only Sommaire so the header fits with the theme button */
+@media(max-width:420px){#overview{font-size:0;padding:8px 12px}#overview span{font-size:16px;padding:0}#theme{padding:8px 11px}}
