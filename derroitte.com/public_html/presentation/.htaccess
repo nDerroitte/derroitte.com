@@ -1,0 +1,7 @@
+# Career presentation: a single-file page (inline <style>/<script>, positions set
+# from JS, data: grain texture). The site-wide CSP in ../.htaccess blocks inline
+# code, so this folder gets its own policy, like /gr20. Never indexed.
+<IfModule mod_headers.c>
+    Header set Content-Security-Policy "default-src 'self'; frame-ancestors 'self'; form-action 'self'; base-uri 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; object-src 'none';"
+    Header set X-Robots-Tag "noindex, nofollow"
+</IfModule>
